@@ -101,7 +101,7 @@ async def pogchamp(ctx):
 
 @client.command()
 async def groovy(ctx):
-    await ctx.send(f'https://assets.ubuntu.com/v1/fe951eda-20.10_Groovy+Gorilla_RPi_Sketch.svg')
+    await ctx.send(f'https://res.cloudinary.com/canonical/image/fetch/https://assets.ubuntu.com/v1/fe951eda-20.10_Groovy+Gorilla_RPi_Sketch.svg')
 
 @client.command()
 async def pi(ctx):
