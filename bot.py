@@ -100,6 +100,10 @@ async def pogchamp(ctx):
 ''')
 
 @client.command()
+async def groovygorilla(ctx):
+    await ctx.send(f'https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_250,h_388/https://assets.ubuntu.com/v1/fe951eda-20.10_Groovy+Gorilla_RPi_Sketch.svg')
+
+@client.command()
 async def pi(ctx):
     await ctx.send(f'Here is π calculated to the first 1000000 digits: http://newton.ex.ac.uk/research/qsystems/collabs/pi/pi6.txt')
 
