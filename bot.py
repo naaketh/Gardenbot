@@ -86,7 +86,7 @@ async def on_ready():
 
 @client.command()
 async def ping(ctx):
-    await ctx.send(f'Pong! Client-side ping took {round(client.latency * 1000)}ms')
+    await ctx.send(f':ping_pong: Pong! Client-side ping took {round(client.latency * 1000)}ms')
 
 @client.command()
 async def about(ctx):
