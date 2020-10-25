@@ -96,7 +96,7 @@ async def about(ctx):
 
 @client.command()
 async def license(ctx):
-    await ctx.send(f'Gardenbot is licensed under MIT. That means it\'s open-source and you are free to redistribute your own modifications of the bot.')
+    await ctx.send(f'Gardenbot is licensed under MIT. That means it\'s open-source and you are free to redistribute your own modifications of the bot. This is not the full license, it is just summarized. Please read the full license here: https://raw.githubusercontent.com/meisme-dev/Gardenbot/master/LICENSE')
 
 @client.command()
 async def github(ctx):
