@@ -100,7 +100,7 @@ async def license(ctx):
 
 @client.command()
 async def github(ctx):
-    await ctx.send(f'Gardenbot\'s source code is avalaible at GitHub: https://github.com/meisme-dev/Garden-Bot')
+    await ctx.send(f'Gardenbot\'s source code is avalaible at GitHub: https://github.com/meisme-dev/Gardenbot')
 
 @client.command()
 async def invite(ctx):

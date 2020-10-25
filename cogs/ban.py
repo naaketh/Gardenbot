@@ -24,7 +24,7 @@ class Moderation(commands.Cog):
         for ban_entry in banned_users:
             user = ban_entry.user
             await ctx.guild.unban(user)
-            await ctx.send(f'The user {member.mention} has been unbanned.')
+            await ctx.send(f'The user {member} has been unbanned.')
 
 def setup(client):
     client.add_cog(Moderation(client))
