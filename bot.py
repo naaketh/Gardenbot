@@ -21,7 +21,7 @@ predictions = [
 death_scenarios = [
     "A snake bit you.", "You met a vampire and he sucked all your blood.", \
     "You drank a glass of juice, but there was poison inside.", \
-    "You were thrown out into space by a giant gorilla.", "You ate too much mushrooms.", \
+    "You were thrown out into space by a giant gorilla.", "You ate too many mushrooms.", \
     "A heavy hammer fell onto your head.", "A zombie strangled you to death.", \
     "A maniac cut your throat while you were sleeping.", "You became too old.", \
     "You decided that you had to eat 20 bags of chips.", \
@@ -31,6 +31,26 @@ death_scenarios = [
 ]
 
 scary_things = ["😈", "💀", "👻", "🎃", "🧛‍♂️", "🦇", "🧟"]
+
+distro_list = [
+    "Arch Linux", \
+    "Ubuntu", \
+    "Gentoo", \
+    "Mageia", \
+    "Debian", \
+    "Endeavour OS", \
+    "Zorin OS", \
+    "Pop_OS!", \
+    "Fedora", \
+    "Cent OS", \
+    "Manjaro", \
+    "OpenSUSE", \
+    "Kali", \
+    "Blackarch", \
+    "LFS", \
+    "Artix", \
+    "Arco",
+]
 
 ubuntu_versions = [
     "Ubuntu 4.10 (Warty Warthog)", \
@@ -100,11 +120,15 @@ async def license(ctx):
 
 @client.command()
 async def github(ctx):
-    await ctx.send(f'Gardenbot\'s source code is avalaible at GitHub: https://github.com/meisme-dev/Gardenbot')
+    await ctx.send(f'Gardenbot\'s source code is avalaible on GitHub: https://github.com/meisme-dev/Gardenbot')
 
 @client.command()
 async def invite(ctx):
     await ctx.send(f'If you want to add Gardeonbot to your server, use this link: https://discord.com/api/oauth2/authorize?client_id=769606923091181569&permissions=8&scope=bot')
+
+@client.command()
+async def distro(ctx):
+    await ctx.send(random.choice(distro_list))
 
 @client.command()
 async def hello(ctx):
@@ -172,14 +196,19 @@ async def rubbish(ctx):
             word = word + random.choice(consonants) + random.choice(vowels)
         sentence = sentence + word + " "
     await ctx.send(sentence.capitalize().rstrip() + random.choice(["!","?","."]))
-    
+
+@client.command()
+async def echo(ctx,*,arg):
+    await ctx.channel.purge(limit=1)
+    await ctx.send(f"{arg}")
+
 @client.command()
 async def help(ctx,arg):
     author = ctx.message.author
     await author.create_dm()
     if arg == "moderation":
         embedVar = discord.Embed(title="Moderation Commands", description="Shows a list of commands for moderators \n \u200B", color=0x3388FF)
-        embedVar.add_field(name="Kick", value="```Kick a member. Usage: ./kick @member``` \n \u200B", inline=True)
+        embedVar.add_field(name="Kick", value="```Kicks a member. Usage: ./kick @member``` \n \u200B", inline=True)
         embedVar.add_field(name="Mute", value="```Mutes a member. Usage: ./mute @member``` \n \u200B", inline=True)
         embedVar.add_field(name="Ban", value="```Bans a member. Usage: ./ban @member``` \n \u200B", inline=True)
    
@@ -190,8 +219,8 @@ async def help_error(ctx,error):
     if isinstance(error, commands.MissingRequiredArgument):
         embedVar = discord.Embed(title="Help", description="Shows a list of commands \n \u200B", color=0x3388FF)
         embedVar.add_field(name="Utility", value="```help \nping about \nlicense github \ninvite pi \nptable``` \n \u200B", inline=True)
-        embedVar.add_field(name="Fun", value="```hello \nrandnum predict \ndie boo \npogchamp ubuntu \ngroovy rubbish``` \n \u200B", inline=True)
-        embedVar.add_field(name="Moderation", value="```ban \nmute \nkick \n\u200B  \nMore coming soon!```", inline=True)
+        embedVar.add_field(name="Fun", value="```hello distro \nrandnum predict \ndie boo \npogchamp ubuntu \ngroovy rubbish``` \n \u200B", inline=True)
+        embedVar.add_field(name="Moderation", value="```ban \nmute \nkick \npurge  \nMore coming soon!```", inline=True)
         await ctx.send(embed=embedVar)
 
 @client.event
