@@ -1,11 +1,12 @@
 import discord
 import os
 import random
+from discord.ext import commands
 from discord.ext.commands import has_permissions, Cog
 from time import sleep
 from datetime import datetime
 
-class Misc(Cog):
+class Misc(commands.Cog):
 
     def _init_(self, bot):
         self.bot = bot
@@ -99,51 +100,51 @@ class Misc(Cog):
         "n","p","q","r","s","t","v","w","x","z"
     ]
 
-    @command()
+    @commands.command()
     async def ping(self, ctx):
         await ctx.send(f'Pong! Client-side ping took {round(bot.latency * 1000)}ms')
 
-    @command()
+    @commands.command()
     async def about(self, ctx):
         await ctx.send(f'Gardenbot is a Discord by me is me forked from PurpleBot (https://github.com/PurpleSci/PurpleBot).')
 
-    @command()
+    @commands.command()
     async def license(self, ctx):
         await ctx.send(f'Gardenbot is licensed under MIT. That means it\'s open-source and you are free to redistribute your own modifications of the bot. This is not the full license, it is just summarized. Please read the full license here: https://raw.githubusercontent.com/meisme-dev/Gardenbot/master/LICENSE')
 
-    @command()
+    @commands.command()
     async def github(self, ctx):
         await ctx.send(f'Gardenbot\'s source code is avalaible on GitHub: https://github.com/meisme-dev/Gardenbot')
 
-    @command()
+    @commands.command()
     async def invite(self, ctx):
         await ctx.send(f'If you want to add Gardeonbot to your server, use this link: https://discord.com/api/oauth2/authorize?client_id=769606923091181569&permissions=8&scope=bot')
 
-    @command()
+    @commands.command()
     async def distro(self, ctx):
         await ctx.send(random.choice(distro_list))
 
-    @command()
+    @commands.command()
     async def hello(self, ctx):
         await ctx.send(random.choice(greetings))
 
-    @command()
+    @commands.command()
     async def randnum(self, ctx):
         await ctx.send(random.randint(0, 10000))
 
-    @command()
+    @commands.command()
     async def predict(self, ctx):
         await ctx.send(random.choice(predictions))
 
-    @command()
+    @commands.command()
     async def die(self, ctx):
         await ctx.send(random.choice(death_scenarios))
 
-    @command()
+    @commands.command()
     async def boo(self, ctx):
         await ctx.send(random.choice(scary_things))
 
-    @command()
+    @commands.command()
     async def pogchamp(self, ctx):
         await ctx.send('''
     ░░░░░▒░░▄██▄░▒░░░░░░
@@ -164,23 +165,23 @@ class Misc(Cog):
     ░░░░░░░▒▒▒▒▒▒▒░░░░░░
     ''')
 
-    @command()
+    @commands.command()
     async def ubuntu(self, ctx):
         await ctx.send(random.choice(ubuntu_versions))
 
-    @command()
+    @commands.command()
     async def groovy(self, ctx):
         await ctx.send(f'https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_500,h_776/https://assets.ubuntu.com/v1/fe951eda-20.10_Groovy+Gorilla_RPi_Sketch.svg')
 
-    @command()
+    @commands.command()
     async def pi(self, ctx):
         await ctx.send(f'Here is π calculated to the first 1000000 digits: http://newton.ex.ac.uk/research/qsystems/collabs/pi/pi6.txt')
 
-    @command()
+    @commands.command()
     async def ptable(self, ctx):
         await ctx.send(f'Ptable is an interactive online version of the Periodic Table of Elements: https://ptable.com/')
 
-    @command()
+    @commands.command()
     async def rubbish(self, ctx):
         sentence = ""
         for i in range(random.randrange(3,7)):
@@ -190,8 +191,8 @@ class Misc(Cog):
             sentence = sentence + word + " "
         await ctx.send(sentence.capitalize().rstrip() + random.choice(["!","?","."]))
 
-    @command()
-    async def echo(ctx,*,arg):
+    @commands.command()
+    async def echo(self,ctx,*,arg):
         await ctx.channel.purge(limit=1)
         await ctx.send(f"{arg}")
 
