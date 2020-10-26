@@ -1,23 +1,22 @@
 import discord
 import os
 import random
-from discord.ext import commands
-from discord.ext.commands import has_permissions
+from discord.ext.commands import Cog, command, has_permissions
 from time import sleep
 from datetime import datetime
 
-class Moderation(commands.Cog):
+class Moderation(Cog):
 
-    def _init_(self, client):
-        self.client = client
+    def _init_(self, bot):
+        self.bot = bot
 
-    @commands.command()
+    @command()
     @has_permissions(administrator=True)
     async def ban(self,ctx,member : discord.Member, *, reason = None):
         await member.ban(reason=reason)
         await ctx.send(f'The user {member.mention} has been banned.')
         
-    @commands.command()
+    @command()
     @has_permissions(administrator=True)
     async def unban(self,ctx, *, member):
         banned_users = await ctx.guild.bans()
@@ -26,5 +25,5 @@ class Moderation(commands.Cog):
             await ctx.guild.unban(user)
             await ctx.send(f'The user {member} has been unbanned.')
 
-def setup(client):
-    client.add_cog(Moderation(client))
+def setup(bot):
+    bot.add_cog(Moderation(bot))
