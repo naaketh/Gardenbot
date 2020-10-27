@@ -203,6 +203,7 @@ async def pi(ctx):
 async def ptable(ctx):
     await ctx.send(f'Ptable is an interactive online version of the Periodic Table of Elements: https://ptable.com/')
 
+
 @client.command()
 async def rubbish(ctx):
     sentence = ""
