@@ -49,7 +49,21 @@ distro_list = [
     "Blackarch", \
     "LFS", \
     "Artix", \
-    "Arco",
+    "Arco", \
+    "Knoppix", \
+    "Alpine", \
+    "FreeBSD", \
+    "OpenBSD", \
+    "DragonflyBSD", \
+    "Hyperbola", \
+    "Parabola", \
+    "DragonflyBSD", \
+    "Qubes OS", \
+    "Void Linux", \
+    "Venom Linux", \
+    "Elementary OS" \
+
+
 ]
 
 ubuntu_versions = [
