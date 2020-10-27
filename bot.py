@@ -61,7 +61,8 @@ distro_list = [
     "Qubes OS", \
     "Void Linux", \
     "Venom Linux", \
-    "Elementary OS" \
+    "Elementary OS", \
+    "Slackware" 
 
 
 ]
@@ -100,7 +101,7 @@ ubuntu_versions = [
 	"Ubuntu 19.10 (Eoan Ermine)",  \
 	"Ubuntu 20.04 LTS (Focal Fossa)",  \
 	"Ubuntu 20.10 (Groovy Gorilla)",  \
-    "Ubuntu 21.04 (Hirsute H...)",
+    "Ubuntu 21.04 (Hirsute H...)"
 ]
 
 vowels = ["a","e","i","o","u","y"]
