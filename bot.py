@@ -52,19 +52,20 @@ distro_list = [
     "Arco", \
     "Knoppix", \
     "Alpine", \
-    "FreeBSD", \
-    "OpenBSD", \
-    "DragonflyBSD", \
     "Hyperbola", \
     "Parabola", \
-    "DragonflyBSD", \
     "Qubes OS", \
     "Void Linux", \
     "Venom Linux", \
     "Elementary OS", \
-    "Slackware" 
-
-
+    "Slackware", \
+    "RHEL", \
+    "gNewSense", \
+    "MX Linux", \
+    "Xubuntu", \
+    "KDE Neon", \
+    "Kubuntu", \
+    "Lubuntu"
 ]
 
 ubuntu_versions = [
