@@ -7,8 +7,8 @@ from time import sleep
 
 class Moderation(commands.Cog):
 
-    def _init_(self, bot):
-        self.bot = bot
+    def _init_(self, client):
+        self.client = client
 
     @commands.command()
     @has_permissions(manage_messages=True)
@@ -18,5 +18,5 @@ class Moderation(commands.Cog):
         sleep(1)
         await sent.delete()
 
-def setup(bot):
-    bot.add_cog(Moderation(bot))
+def setup(client):
+    client.add_cog(Moderation(client))

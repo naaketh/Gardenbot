@@ -8,8 +8,8 @@ from datetime import datetime
 
 class Moderation(commands.Cog):
 
-    def _init_(self, bot):
-        self.bot = bot
+    def _init_(self, client):
+        self.client = client
 
     @commands.command()
     @has_permissions(administrator=True)
@@ -17,5 +17,5 @@ class Moderation(commands.Cog):
         await member.kick(reason=reason)
         await ctx.send(f':white_check_mark: | The member {member.mention} has been kicked off this server.')
 
-def setup(bot):
-    bot.add_cog(Moderation(bot))
+def setup(client):
+    client.add_cog(Moderation(client))
