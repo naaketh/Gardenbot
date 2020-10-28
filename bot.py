@@ -3,6 +3,8 @@ import os
 import random
 from discord.ext import commands
 from dotenv import load_dotenv
+import aiohttp
+import asyncio
 
 client = commands.Bot(command_prefix="./", help_command=None)
 load_dotenv()
@@ -30,13 +32,18 @@ death_scenarios = [
     "You were trying to install Arch Linux, but failed."
 ]
 
-scary_things = ["😈", "💀", "👻", "🎃", "🧛‍♂️", "🦇", "🧟"]
+
+subreddits = [
+    "linuxmemes", \
+    "dankmemes", \
+    "memes" \
+]
+
 
 distro_list = [
-    "Arch Linux", \
+    "Arch BTW", \
     "Ubuntu", \
     "Gentoo", \
-    "Mageia", \
     "Debian", \
     "Endeavour OS", \
     "Zorin OS", \
@@ -46,26 +53,27 @@ distro_list = [
     "Manjaro", \
     "OpenSUSE", \
     "Kali", \
-    "Blackarch", \
-    "LFS", \
     "Artix", \
-    "Arco", \
     "Knoppix", \
     "Alpine", \
     "Hyperbola", \
     "Parabola", \
     "Qubes OS", \
     "Void Linux", \
-    "Venom Linux", \
     "Elementary OS", \
     "Slackware", \
     "RHEL", \
     "gNewSense", \
     "MX Linux", \
-    "Xubuntu", \
-    "KDE Neon", \
-    "Kubuntu", \
-    "Lubuntu"
+    "Parrot", \
+]
+bsd_distros = [
+    "FreeBSD", \
+    "OpenBSD", \
+    "DragonflyBSD", \
+    "GhostBSD", \
+    "NetBSD", \
+    "PC-BSD" \
 ]
 
 ubuntu_versions = [
@@ -163,10 +171,6 @@ async def die(ctx):
     await ctx.send(random.choice(death_scenarios))
 
 @client.command()
-async def boo(ctx):
-    await ctx.send(random.choice(scary_things))
-
-@client.command()
 async def pogchamp(ctx):
     await ctx.send('''
 ░░░░░▒░░▄██▄░▒░░░░░░
@@ -204,6 +208,34 @@ async def ptable(ctx):
     await ctx.send(f'Ptable is an interactive online version of the Periodic Table of Elements: https://ptable.com/')
 
 @client.command()
+async def bsd(ctx):
+    await ctx.send(random.choice(bsd_distros))
+
+@client.command(pass_context=True)
+async def meme(ctx): 
+    memesubreddits = random.choice(subreddits)
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get(F'https://www.reddit.com/r/{memesubreddits}/new.json?sort=hot') as r:
+            res = await r.json()
+            embed = discord.Embed(title=f"From r/{memesubreddits}", description="")
+            embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("👍")
+            await message.add_reaction("👎")
+            await message.add_reaction("🗑️")
+
+            def check(reaction, user):
+                return user == ctx.message.author and str(reaction.emoji) == '🗑️'
+
+            try:
+                await client.wait_for('reaction_add', timeout=60.0, check=check)
+            except asyncio.TimeoutError:
+                pass
+            else:
+                await message.delete()
+
+
+@client.command()
 async def rubbish(ctx):
     sentence = ""
     for i in range(random.randrange(3,7)):
@@ -224,19 +256,44 @@ async def help(ctx,arg):
     await author.create_dm()
     if arg == "moderation":
         embedVar = discord.Embed(title="Moderation Commands", description="Shows a list of commands for moderators \n \u200B", color=0x3388FF)
-        embedVar.add_field(name="Kick", value="```Kicks a member. Usage: ./kick @member``` \n \u200B", inline=True)
-        embedVar.add_field(name="Mute", value="```Mutes a member. Usage: ./mute @member``` \n \u200B", inline=True)
-        embedVar.add_field(name="Ban", value="```Bans a member. Usage: ./ban @member``` \n \u200B", inline=True)
-   
+        embedVar.add_field(name="Kick", value="`Kicks a member. \nUsage: ./kick @member` \n \u200B", inline=False)
+        embedVar.add_field(name="Mute", value="`Mutes a member. \nUsage: ./mute @member` \n \u200B", inline=False)
+        embedVar.add_field(name="Ban", value="`Bans a member. \nUsage: ./ban @member `\n \u200B", inline=False)
+    if arg == "fun":
+        embedVar = discord.Embed(title="Fun Commands", description="Shows a list of commands for fun stuff \n \u200B", color=0x3388FF)
+        embedVar.add_field(name="Hello", value="`Greets you! \nUsage: ./hello` \n \u200B", inline=False)
+        embedVar.add_field(name="Distro", value="`Sends a random distro. \nUsage: ./distro` \n \u200B", inline=False)
+        embedVar.add_field(name="BSD", value="`Sends a BSD distro. \nUsage: ./bsd` \n \u200B", inline=False)
+        embedVar.add_field(name="Echo", value="`Repeats the specified message. \nUsage: ./echo message`\n \u200B", inline=False)
+        embedVar.add_field(name="Randnum", value="`Sends a random number between 0 and 10000. \nUsage: ./randnum`\n \u200B", inline=False)
+        embedVar.add_field(name="Predict", value="`Sends a random positive/negative response, similar to \"8ball\". \nUsage: ./predict`\n \u200B", inline=False)
+        embedVar.add_field(name="Die", value="`Sends a random death scenario. \nUsage: ./die`\n \u200B", inline=False)
+        embedVar.add_field(name="Boo", value="`Sends a random Haloween emoji. \nUsage: ./boo`\n \u200B", inline=False)
+        embedVar.add_field(name="Pogchamp", value="`Sends the \"Pogchamp\" face in ASCII. \nUsage: ./pogchamp`\n \u200B", inline=False)
+        embedVar.add_field(name="Ubuntu", value="`Sends a random Ubuntu version. \nUsage: ./ubuntu`\n \u200B", inline=False)
+        embedVar.add_field(name="Rubbish", value="`Generates random pronounciable nonsense. \nUsage: ./rubbish`\n \u200B", inline=False)
+    if arg == "utility":
+        embedVar = discord.Embed(title="Utility Commands", description="Shows a list of commands for utility \n \u200B", color=0x3388FF)
+        embedVar.add_field(name="Help", value="`Displays the help message. \nUsage: ./help [category]`\n \u200B", inline=False)
+        embedVar.add_field(name="Ping", value="`Sends the bot latency in ms. \nUsage: ./ping `\n \u200B", inline=False)
+        embedVar.add_field(name="About", value="`Displays information about the bot. \nUsage: ./about `\n \u200B", inline=False)
+        embedVar.add_field(name="License", value="`Displays the bot license. \nUsage: ./license `\n \u200B", inline=False)
+        embedVar.add_field(name="GitHub", value="`Sends the source code link. \nUsage: ./github `\n \u200B", inline=False)
+        embedVar.add_field(name="Invite", value="`Sends the bot invite link. \nUsage: ./invite `\n \u200B", inline=False)
+        embedVar.add_field(name="Pi", value="`Displays a link to 1 000 000 digits of pi. \nUsage: ./pi `\n \u200B", inline=False)
+        embedVar.add_field(name="Ptable", value="`Displays a link to an interactive Periodic Table. \nUsage: ./ptable`\n \u200B", inline=False)
+
     await ctx.send(embed=embedVar)
+
+
 
 @help.error
 async def help_error(ctx,error):
     if isinstance(error, commands.MissingRequiredArgument):
         embedVar = discord.Embed(title="Help", description="Shows a list of commands \n \u200B", color=0x3388FF)
-        embedVar.add_field(name="Utility", value="```help \nping about \nlicense github \ninvite pi \nptable``` \n \u200B", inline=True)
-        embedVar.add_field(name="Fun", value="```hello distro \nrandnum predict \ndie boo \npogchamp ubuntu \ngroovy rubbish``` \n \u200B", inline=True)
-        embedVar.add_field(name="Moderation", value="```ban \nmute \nkick \npurge  \nMore coming soon!```", inline=True)
+        embedVar.add_field(name="Utility", value="`Shows a list of utility commands! \nUsage: ./help utility` \n \u200B", inline=False)
+        embedVar.add_field(name="Fun", value="`Shows a list of commands for fun stuff! \nUsage: ./help fun` \n \u200B", inline=False)
+        embedVar.add_field(name="Moderation", value="`Shows a list of commands for moderators! \nUsage: ./help moderation`", inline=False)
         await ctx.send(embed=embedVar)
 
 @client.event
