@@ -231,8 +231,15 @@ async def meme(ctx):
     async with aiohttp.ClientSession() as cs:
         async with cs.get(F'https://www.reddit.com/r/{memesubreddits}/new.json?sort=hot') as r:
             res = await r.json()
-            embed = discord.Embed(title=f"From r/{memesubreddits}", description="")
-            embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
+            randomint = random.randint(0, 24)
+            embedLink = res['data']['children'] [randomint]['data']['permalink']
+            embedTitle = res['data']['children'] [randomint]['data']['title']
+            embedFooterUp = res['data']['children'] [randomint]['data']['ups']
+            embedFooterDown = res['data']['children'] [randomint]['data']['downs']
+            embedFooterComments = res['data']['children'] [randomint]['data']['num_comments']
+            embed = discord.Embed(title=f"From r/{memesubreddits}", description=F"[{embedTitle}](https://reddit.com{embedLink})")
+            embed.set_image(url=res['data']['children'] [randomint]['data']['url'])
+            embed.set_footer(text=F"👍{embedFooterUp}  👎{embedFooterDown}  💬{embedFooterComments}")
             message = await ctx.send(embed=embed)
             await message.add_reaction("👍")
             await message.add_reaction("👎")
@@ -253,7 +260,35 @@ async def meme(ctx):
 @meme.error
 async def meme_error(ctx,error):
     if isinstance(error, commands.CommandInvokeError):
-        await ctx.send("Oops something bad happened from our side. If the problem persists, please open an issue on Github!")
+        memesubreddits = random.choice(subreddits)
+        async with aiohttp.ClientSession() as cs:
+            async with cs.get(F'https://www.reddit.com/r/{memesubreddits}/new.json?sort=hot') as r:
+                res = await r.json()
+                randomint = random.randint(0, 24)
+                embedLink = res['data']['children'] [randomint]['data']['permalink']
+                embedTitle = res['data']['children'] [randomint]['data']['title']
+                embedFooterUp = res['data']['children'] [randomint]['data']['ups']
+                embedFooterDown = res['data']['children'] [randomint]['data']['downs']
+                embedFooterComments = res['data']['children'] [randomint]['data']['num_comments']
+                embed = discord.Embed(title=f"From r/{memesubreddits}", description=F"[{embedTitle}](https://reddit.com{embedLink})")
+                embed.set_image(url=res['data']['children'] [randomint]['data']['url'])
+                embed.set_footer(text=F"👍{embedFooterUp}  👎{embedFooterDown}  💬{embedFooterComments}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction("👍")
+                await message.add_reaction("👎")
+                await message.add_reaction("🗑️")
+
+                def check(reaction, user):
+                    return user == ctx.message.author and str(reaction.emoji) == '🗑️'
+
+                try:
+                    await client.wait_for('reaction_add', timeout=60.0, check=check)
+                except asyncio.TimeoutError:
+                    pass
+                else:
+                    await message.delete()                
+                    message = ""
+                    return
 
 
 @client.command()
