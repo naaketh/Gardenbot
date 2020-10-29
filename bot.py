@@ -5,6 +5,8 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import aiohttp
 import asyncio
+import time
+
 
 client = commands.Bot(command_prefix="./", help_command=None)
 load_dotenv()
@@ -136,7 +138,7 @@ async def ping(ctx):
 
 @client.command()
 async def about(ctx):
-    await ctx.send(f'Gardenbot is a Discord by me is me forked from PurpleBot (https://github.com/PurpleSci/PurpleBot).')
+    await ctx.send(f'Gardenbot is a Discord by me is me forked from PurpleBot (<https://github.com/PurpleSci/PurpleBot>).')
 
 @client.command()
 async def license(ctx):
@@ -144,15 +146,27 @@ async def license(ctx):
 
 @client.command()
 async def github(ctx):
-    await ctx.send(f'Gardenbot\'s source code is avalaible on GitHub: https://github.com/meisme-dev/Gardenbot')
+    await ctx.send(f'Gardenbot\'s source code is avalaible on GitHub: <https://github.com/meisme-dev/Gardenbot>')
 
 @client.command()
 async def invite(ctx):
-    await ctx.send(f'If you want to add Gardeonbot to your server, use this link: https://discord.com/api/oauth2/authorize?client_id=769606923091181569&permissions=8&scope=bot')
+    await ctx.send(f'If you want to add Gardeonbot to your server, use this link: <https://discord.com/api/oauth2/authorize?client_id=769606923091181569&permissions=8&scope=bot>')
 
 @client.command()
 async def distro(ctx):
     await ctx.send(random.choice(distro_list))
+    
+@client.command(pass_context = True)
+async def dm(ctx,*,arg):
+    await ctx.message.author.send(arg)
+
+@client.command(pass_context = True)
+async def reminder(ctx,specifiedtime,arg):
+        specifiedtime = int(specifiedtime) * 60
+        await ctx.channel.purge(limit=1)
+        await ctx.send(f"Reminder set to {arg}, sending in {specifiedtime} seconds!")
+        await asyncio.sleep(specifiedtime)
+        await ctx.message.author.send(arg)
 
 @client.command()
 async def hello(ctx):
@@ -232,7 +246,9 @@ async def meme(ctx):
             except asyncio.TimeoutError:
                 pass
             else:
-                await message.delete()
+                await message.delete()                
+                message = ""
+                return
 
 
 @client.command()
@@ -256,32 +272,35 @@ async def help(ctx,arg):
     await author.create_dm()
     if arg == "moderation":
         embedVar = discord.Embed(title="Moderation Commands", description="Shows a list of commands for moderators \n \u200B", color=0x3388FF)
-        embedVar.add_field(name="Kick", value="`Kicks a member. \nUsage: ./kick @member` \n \u200B", inline=False)
-        embedVar.add_field(name="Mute", value="`Mutes a member. \nUsage: ./mute @member` \n \u200B", inline=False)
-        embedVar.add_field(name="Ban", value="`Bans a member. \nUsage: ./ban @member `\n \u200B", inline=False)
+        embedVar.add_field(name="Kick", value="`Kicks a member. \nUsage: ./kick <@member>` \n \u200B", inline=True)
+        embedVar.add_field(name="Mute", value="`Mutes a member. \nUsage: ./mute <@member>` \n \u200B", inline=True)
+        embedVar.add_field(name="Ban", value="`Bans a member. \nUsage: ./ban <@member>`\n \u200B", inline=True)
     if arg == "fun":
         embedVar = discord.Embed(title="Fun Commands", description="Shows a list of commands for fun stuff \n \u200B", color=0x3388FF)
-        embedVar.add_field(name="Hello", value="`Greets you! \nUsage: ./hello` \n \u200B", inline=False)
-        embedVar.add_field(name="Distro", value="`Sends a random distro. \nUsage: ./distro` \n \u200B", inline=False)
-        embedVar.add_field(name="BSD", value="`Sends a BSD distro. \nUsage: ./bsd` \n \u200B", inline=False)
-        embedVar.add_field(name="Echo", value="`Repeats the specified message. \nUsage: ./echo message`\n \u200B", inline=False)
-        embedVar.add_field(name="Randnum", value="`Sends a random number between 0 and 10000. \nUsage: ./randnum`\n \u200B", inline=False)
-        embedVar.add_field(name="Predict", value="`Sends a random positive/negative response, similar to \"8ball\". \nUsage: ./predict`\n \u200B", inline=False)
-        embedVar.add_field(name="Die", value="`Sends a random death scenario. \nUsage: ./die`\n \u200B", inline=False)
-        embedVar.add_field(name="Boo", value="`Sends a random Haloween emoji. \nUsage: ./boo`\n \u200B", inline=False)
-        embedVar.add_field(name="Pogchamp", value="`Sends the \"Pogchamp\" face in ASCII. \nUsage: ./pogchamp`\n \u200B", inline=False)
-        embedVar.add_field(name="Ubuntu", value="`Sends a random Ubuntu version. \nUsage: ./ubuntu`\n \u200B", inline=False)
-        embedVar.add_field(name="Rubbish", value="`Generates random pronounciable nonsense. \nUsage: ./rubbish`\n \u200B", inline=False)
+        embedVar.add_field(name="Hello", value="`Greets you! \nUsage: ./hello` \n \u200B", inline=True)
+        embedVar.add_field(name="Distro", value="`Sends a random distro. \nUsage: ./distro` \n \u200B", inline=True)
+        embedVar.add_field(name="BSD", value="`Sends a BSD distro. \nUsage: ./bsd` \n \u200B", inline=True)
+        embedVar.add_field(name="Echo", value="`Repeats the specified message. \nUsage: ./echo message`\n \u200B", inline=True)
+        embedVar.add_field(name="Randnum", value="`Sends a random number between 0 and 10000. \nUsage: ./randnum`\n \u200B", inline=True)
+        embedVar.add_field(name="Predict", value="`Sends a random positive/negative response, similar to \"8ball\". \nUsage: ./predict`\n \u200B", inline=True)
+        embedVar.add_field(name="Die", value="`Sends a random death scenario. \nUsage: ./die`\n \u200B", inline=True)
+        embedVar.add_field(name="Boo", value="`Sends a random Haloween emoji. \nUsage: ./boo`\n \u200B", inline=True)
+        embedVar.add_field(name="Pogchamp", value="`Sends the \"Pogchamp\" face in ASCII. \nUsage: ./pogchamp`\n \u200B", inline=True)
+        embedVar.add_field(name="Ubuntu", value="`Sends a random Ubuntu version. \nUsage: ./ubuntu`\n \u200B", inline=True)
+        embedVar.add_field(name="Rubbish", value="`Generates random pronounciable nonsense. \nUsage: ./rubbish`\n \u200B", inline=True)
+        embedVar.add_field(name="DM", value="`DMs you with a message. \nUsage: ./dm <message>`\n \u200B", inline=True)
     if arg == "utility":
         embedVar = discord.Embed(title="Utility Commands", description="Shows a list of commands for utility \n \u200B", color=0x3388FF)
-        embedVar.add_field(name="Help", value="`Displays the help message. \nUsage: ./help [category]`\n \u200B", inline=False)
-        embedVar.add_field(name="Ping", value="`Sends the bot latency in ms. \nUsage: ./ping `\n \u200B", inline=False)
-        embedVar.add_field(name="About", value="`Displays information about the bot. \nUsage: ./about `\n \u200B", inline=False)
-        embedVar.add_field(name="License", value="`Displays the bot license. \nUsage: ./license `\n \u200B", inline=False)
-        embedVar.add_field(name="GitHub", value="`Sends the source code link. \nUsage: ./github `\n \u200B", inline=False)
-        embedVar.add_field(name="Invite", value="`Sends the bot invite link. \nUsage: ./invite `\n \u200B", inline=False)
-        embedVar.add_field(name="Pi", value="`Displays a link to 1 000 000 digits of pi. \nUsage: ./pi `\n \u200B", inline=False)
-        embedVar.add_field(name="Ptable", value="`Displays a link to an interactive Periodic Table. \nUsage: ./ptable`\n \u200B", inline=False)
+        embedVar.add_field(name="Help", value="Displays the help message. \nUsage: ./help [category]\n \u200B", inline=True)
+        embedVar.add_field(name="Ping", value="Sends the bot latency in ms. \nUsage: ./ping \n \u200B", inline=True)
+        embedVar.add_field(name="About", value="Displays information about the bot. \nUsage: ./about \n \u200B", inline=True)
+        embedVar.add_field(name="License", value="Displays the bot license. \nUsage: ./license \n \u200B", inline=True)
+        embedVar.add_field(name="GitHub", value="Sends the source code link. \nUsage: ./github \n \u200B", inline=True)
+        embedVar.add_field(name="Invite", value="Sends the bot invite link. \nUsage: ./invite \n \u200B", inline=True)
+        embedVar.add_field(name="Pi", value="Displays a link to 1 000 000 digits of pi. \nUsage: ./pi \n \u200B", inline=True)
+        embedVar.add_field(name="Ptable", value="Displays a link to an interactive Periodic Table. \nUsage: ./ptable\n \u200B", inline=True)        
+        embedVar.add_field(name="Reminder", value="Sets a reminder. \nUsage: ./reminder <minutes> <message>\n \u200B", inline=True)
+
 
     await ctx.send(embed=embedVar)
 
