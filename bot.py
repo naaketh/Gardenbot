@@ -38,7 +38,9 @@ death_scenarios = [
 subreddits = [
     "linuxmemes", \
     "dankmemes", \
-    "memes" \
+    "memes", \
+    "cleanmemes", \
+    "wholesomememes" \
 ]
 
 
@@ -231,7 +233,7 @@ async def meme(ctx):
     async with aiohttp.ClientSession() as cs:
         async with cs.get(F'https://www.reddit.com/r/{memesubreddits}/new.json?sort=hot') as r:
             res = await r.json()
-            randomint = random.randint(0, 24)
+            randomint = random.randint(0, 50)
             embedLink = res['data']['children'] [randomint]['data']['permalink']
             embedTitle = res['data']['children'] [randomint]['data']['title']
             embedFooterUp = res['data']['children'] [randomint]['data']['ups']
@@ -290,6 +292,69 @@ async def meme_error(ctx,error):
                     message = ""
                     return
 
+@client.command(pass_context = True)
+async def uinfo(ctx,member: discord.Member):
+    if member.guild_permissions.administrator:
+        admin = "Yes"
+    else:
+        admin = "No"
+    if member.bot:
+        bot = "Yes"
+    else:
+        bot = "No"
+    if member.status == discord.Status.online:
+        status = "Online"
+    elif member.status == discord.Status.offline:
+        status = "Offline"
+    roles = member.roles
+    roles.reverse() 
+    top_role = roles[0]
+    created = member.created_at
+    joined = member.joined_at
+    embed=discord.Embed(title=f"{member}")
+    embed.set_thumbnail(url=f"{member.avatar_url}")
+    embed.add_field(name="Account created", value=f"{created.strftime('%Y-%m-%d')}", inline=True)
+    embed.add_field(name="Nickname", value=f"{member.mention}", inline=True)
+    embed.add_field(name="ID", value=f"{member.id}", inline=True)
+    embed.add_field(name="Joined server at", value=f'{joined.strftime("%Y-%m-%d")}', inline=True)
+    embed.add_field(name="Admin",value=f'{admin}', inline=True)
+    embed.add_field(name="Bot",value=f'{bot}', inline=True)
+    embed.add_field(name=f'Roles', value=f'{len(roles)}', inline=True)
+    embed.add_field(name=f'Top role', value=f'{top_role.mention}', inline=True)
+    embed.add_field(name=f'Status', value=status, inline=True)
+    await ctx.send(embed=embed)
+
+@uinfo.error
+async def userinfo_error(ctx,error):
+    if ctx.message.author.guild_permissions.administrator:
+        admin = "Yes"
+    else:
+        admin = "No"
+    if ctx.message.author.bot:
+        bot = "Yes"
+    else:
+        bot = "No"
+    if ctx.message.author.status == discord.Status.online:
+        status = "Online"
+    elif ctx.message.author.status == discord.Status.offline:
+        status = "Offline"
+    roles = ctx.message.author.roles
+    roles.reverse() 
+    top_role = roles[0]
+    created = ctx.message.author.created_at
+    joined = ctx.message.author.joined_at
+    embed=discord.Embed(title=f"{ctx.message.author}")
+    embed.set_thumbnail(url=f"{ctx.message.author.avatar_url}")
+    embed.add_field(name="Account created", value=f"{created.strftime('%Y-%m-%d')}", inline=True)
+    embed.add_field(name="Nickname", value=f"{ctx.message.author.mention}", inline=True)
+    embed.add_field(name="ID", value=f"{ctx.message.author.id}", inline=True)
+    embed.add_field(name="Joined server at", value=f'{joined.strftime("%Y-%m-%d")}', inline=True)
+    embed.add_field(name="Admin",value=f'{admin}', inline=True)
+    embed.add_field(name="Bot",value=f'{bot}', inline=True)
+    embed.add_field(name=f'Roles', value=f'{len(roles)}', inline=True)
+    embed.add_field(name=f'Top role', value=f'{top_role.mention}', inline=True)
+    embed.add_field(name=f'Status', value=f'{status}', inline=True)
+    await ctx.send(embed=embed)
 
 @client.command()
 async def rubbish(ctx):
