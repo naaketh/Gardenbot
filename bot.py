@@ -8,7 +8,11 @@ import asyncio
 import time
 
 
-client = commands.Bot(command_prefix="./", help_command=None)
+intents = discord.Intents.default()
+intents.members = True  
+intents.presences = True
+
+client = commands.Bot(command_prefix=("./"), help_command=None, intents=intents)
 load_dotenv()
 
 greetings = [
@@ -40,7 +44,8 @@ subreddits = [
     "dankmemes", \
     "memes", \
     "cleanmemes", \
-    "wholesomememes" \
+    "wholesomememes", \
+    "progammerhumor" \
 ]
 
 
@@ -78,6 +83,13 @@ bsd_distros = [
     "GhostBSD", \
     "NetBSD", \
     "PC-BSD" \
+]
+
+sort_mode = [
+    "top", \
+    "hot", \
+    "controversial", \
+    "new" \
 ]
 
 ubuntu_versions = [
@@ -229,11 +241,14 @@ async def bsd(ctx):
 
 @client.command(pass_context=True)
 async def meme(ctx): 
+    async with ctx.typing():
+        asyncio.sleep(3)
     memesubreddits = random.choice(subreddits)
+    sortedmode = random.choice(sort_mode)
     async with aiohttp.ClientSession() as cs:
-        async with cs.get(F'https://www.reddit.com/r/{memesubreddits}/new.json?sort=hot') as r:
+        async with cs.get(F'https://www.reddit.com/r/{memesubreddits}/new.json?sort={sortedmode}') as r:
             res = await r.json()
-            randomint = random.randint(0, 50)
+            randomint = random.randint(0, 25)
             embedLink = res['data']['children'] [randomint]['data']['permalink']
             embedTitle = res['data']['children'] [randomint]['data']['title']
             embedFooterUp = res['data']['children'] [randomint]['data']['ups']
@@ -245,28 +260,17 @@ async def meme(ctx):
             message = await ctx.send(embed=embed)
             await message.add_reaction("👍")
             await message.add_reaction("👎")
-            await message.add_reaction("🗑️")
 
-            def check(reaction, user):
-                return user == ctx.message.author and str(reaction.emoji) == '🗑️'
-
-            try:
-                await client.wait_for('reaction_add', timeout=60.0, check=check)
-            except asyncio.TimeoutError:
-                pass
-            else:
-                await message.delete()                
-                message = ""
-                return
 
 @meme.error
 async def meme_error(ctx,error):
     if isinstance(error, commands.CommandInvokeError):
         memesubreddits = random.choice(subreddits)
         async with aiohttp.ClientSession() as cs:
-            async with cs.get(F'https://www.reddit.com/r/{memesubreddits}/new.json?sort=hot') as r:
+            sortedmode = random.choice(sort_mode)
+            async with cs.get(F'https://www.reddit.com/r/{memesubreddits}/new.json?sort={sortedmode}') as r:
                 res = await r.json()
-                randomint = random.randint(0, 24)
+                randomint = random.randint(0, 25)
                 embedLink = res['data']['children'] [randomint]['data']['permalink']
                 embedTitle = res['data']['children'] [randomint]['data']['title']
                 embedFooterUp = res['data']['children'] [randomint]['data']['ups']
@@ -278,19 +282,8 @@ async def meme_error(ctx,error):
                 message = await ctx.send(embed=embed)
                 await message.add_reaction("👍")
                 await message.add_reaction("👎")
-                await message.add_reaction("🗑️")
 
-                def check(reaction, user):
-                    return user == ctx.message.author and str(reaction.emoji) == '🗑️'
 
-                try:
-                    await client.wait_for('reaction_add', timeout=60.0, check=check)
-                except asyncio.TimeoutError:
-                    pass
-                else:
-                    await message.delete()                
-                    message = ""
-                    return
 
 @client.command(pass_context = True)
 async def uinfo(ctx,member: discord.Member):
@@ -306,6 +299,8 @@ async def uinfo(ctx,member: discord.Member):
         status = "Online"
     elif member.status == discord.Status.offline:
         status = "Offline"
+    else:
+        status = "Do not disturb"
     roles = member.roles
     roles.reverse() 
     top_role = roles[0]
@@ -338,6 +333,8 @@ async def userinfo_error(ctx,error):
         status = "Online"
     elif ctx.message.author.status == discord.Status.offline:
         status = "Offline"
+    else:
+        status = "Do not disturb"
     roles = ctx.message.author.roles
     roles.reverse() 
     top_role = roles[0]
@@ -372,6 +369,31 @@ async def echo(ctx,*,arg):
     await ctx.send(f"{arg}")
 
 @client.command()
+async def reddit(ctx,arg):
+    async with aiohttp.ClientSession() as cs:
+        sortedmode = random.choice(sort_mode)
+        async with cs.get(F'https://www.reddit.com/r/{arg}/new.json?sort={sortedmode}') as r:
+            res = await r.json()
+            randomint = random.randint(0, 25)
+            embedLink = res['data']['children'] [randomint]['data']['permalink']
+            embedTitle = res['data']['children'] [randomint]['data']['title']
+            embedFooterUp = res['data']['children'] [randomint]['data']['ups']
+            embedFooterDown = res['data']['children'] [randomint]['data']['downs']
+            embedFooterComments = res['data']['children'] [randomint]['data']['num_comments']
+            embed = discord.Embed(title=f"From r/{arg}", description=F"[{embedTitle}](https://reddit.com{embedLink})")
+            embed.set_image(url=res['data']['children'] [randomint]['data']['url'])
+            embed.set_footer(text=F"👍{embedFooterUp}  👎{embedFooterDown}  💬{embedFooterComments}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("👍")
+            await message.add_reaction("👎")
+
+@reddit.error
+async def reddit_error(error,ctx):
+    if isinstance(error, commands.CommandInvokeError):
+        await ctx.send(F"Oops! An error occured while fetching a post")
+
+
+@client.command()
 async def help(ctx,arg):
     author = ctx.message.author
     await author.create_dm()
@@ -395,6 +417,7 @@ async def help(ctx,arg):
         embedVar.add_field(name="`Ubuntu`", value="Sends a random Ubuntu version. \nUsage: ./ubuntu\n \u200B", inline=True)
         embedVar.add_field(name="`Rubbish`", value="Generates random pronounciable nonsense. \nUsage: ./rubbish\n \u200B", inline=True)
         embedVar.add_field(name="`DM`", value="DMs you with a message. \nUsage: ./dm <message>\n \u200B", inline=True)
+        embedVar.add_field(name="`Reddit`", value="Fetches a post from the specified Subreddit. \nUsage: ./reddit <subreddit>\n \u200B", inline=True)
     if arg == "utility":
         embedVar = discord.Embed(title="Utility Commands", description="Shows a list of commands for utility \n \u200B", color=0x3388FF)
         embedVar.add_field(name="`Help`", value="Displays the help message. \nUsage: ./help [category]\n \u200B", inline=True)
