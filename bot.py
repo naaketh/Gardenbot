@@ -206,7 +206,7 @@ async def ubuntu(ctx):
 
 @client.command()
 async def groovy(ctx):
-    await ctx.send(f'https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_500,h_776/https://assets.ubuntu.com/v1/fe951eda-20.10_Groovy+Gorilla_RPi_Sketch.svg')
+    await ctx.send('https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_500,h_776/https://assets.ubuntu.com/v1/fe951eda-20.10_Groovy+Gorilla_RPi_Sketch.svg')
 
 @client.command()
 async def pi(ctx):
@@ -368,7 +368,7 @@ async def echo(ctx,*,arg):
 @client.command()
 async def google(ctx,*,arg):
     Urlified = arg.replace(" ", "%20")
-    embed = discord.Embed(title=f"Search Results", description=F"[{arg}](https://google.com/search?q={Urlified})", color=random.randint(0, 0xffffff))
+    embed = discord.Embed(title="Search Results", description=F"[{arg}](https://google.com/search?q={Urlified})", color=random.randint(0, 0xffffff))
     await ctx.send(embed=embed)
 
 @client.command()
