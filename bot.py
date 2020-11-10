@@ -249,39 +249,49 @@ async def meme(ctx):
         async with cs.get(F'https://www.reddit.com/r/{memesubreddits}/new.json?sort={sortedmode}') as r:
             res = await r.json()
             randomint = random.randint(0, 25)
-            embedLink = res['data']['children'] [randomint]['data']['permalink']
-            embedTitle = res['data']['children'] [randomint]['data']['title']
-            embedFooterUp = res['data']['children'] [randomint]['data']['ups']
-            embedFooterDown = res['data']['children'] [randomint]['data']['downs']
-            embedFooterComments = res['data']['children'] [randomint]['data']['num_comments']
-            embed = discord.Embed(title=f"From r/{memesubreddits}", description=F"[{embedTitle}](https://reddit.com{embedLink})")
-            embed.set_image(url=res['data']['children'] [randomint]['data']['url'])
-            embed.set_footer(text=F"👍{embedFooterUp}  👎{embedFooterDown}  💬{embedFooterComments}")
-            message = await ctx.send(embed=embed)
-            await message.add_reaction("👍")
-            await message.add_reaction("👎")
-
+            if not (res['data']['children'][randomint]['data']['over_18']):
+                if not (res['data']['children'][randomint]['data']['is_video']):
+                    embedLink = res['data']['children'] [randomint]['data']['permalink']
+                    embedTitle = res['data']['children'] [randomint]['data']['title']
+                    embedFooterUp = res['data']['children'] [randomint]['data']['ups']
+                    embedFooterDown = res['data']['children'] [randomint]['data']['downs']
+                    embedFooterComments = res['data']['children'] [randomint]['data']['num_comments']
+                    embed = discord.Embed(title=f"From r/{memesubreddits}", description=F"[{embedTitle}](https://reddit.com{embedLink})", color=random.randint(0, 0xffffff))
+                    embed.set_image(url=res['data']['children'] [randomint]['data']['url'])
+                    embed.set_footer(text=F"👍{embedFooterUp}  👎{embedFooterDown}  💬{embedFooterComments}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction("👍")
+                    await message.add_reaction("👎")
+                else:
+                    await meme(ctx)
+            else:
+                print("Blocked NSFW")
+                await meme(ctx)
 
 @meme.error
 async def meme_error(ctx,error):
     if isinstance(error, commands.CommandInvokeError):
+        async with ctx.typing():
+            asyncio.sleep(3)
         memesubreddits = random.choice(subreddits)
+        sortedmode = random.choice(sort_mode)
         async with aiohttp.ClientSession() as cs:
-            sortedmode = random.choice(sort_mode)
             async with cs.get(F'https://www.reddit.com/r/{memesubreddits}/new.json?sort={sortedmode}') as r:
                 res = await r.json()
                 randomint = random.randint(0, 25)
-                embedLink = res['data']['children'] [randomint]['data']['permalink']
-                embedTitle = res['data']['children'] [randomint]['data']['title']
-                embedFooterUp = res['data']['children'] [randomint]['data']['ups']
-                embedFooterDown = res['data']['children'] [randomint]['data']['downs']
-                embedFooterComments = res['data']['children'] [randomint]['data']['num_comments']
-                embed = discord.Embed(title=f"From r/{memesubreddits}", description=F"[{embedTitle}](https://reddit.com{embedLink})")
-                embed.set_image(url=res['data']['children'] [randomint]['data']['url'])
-                embed.set_footer(text=F"👍{embedFooterUp}  👎{embedFooterDown}  💬{embedFooterComments}")
-                message = await ctx.send(embed=embed)
-                await message.add_reaction("👍")
-                await message.add_reaction("👎")
+                if not (res['data']['children'][randomint]['data']['over_18']):
+                    if not (res['data']['children'][randomint]['data']['is_video']):
+                        embedLink = res['data']['children'] [randomint]['data']['permalink']
+                        embedTitle = res['data']['children'] [randomint]['data']['title']
+                        embedFooterUp = res['data']['children'] [randomint]['data']['ups']
+                        embedFooterDown = res['data']['children'] [randomint]['data']['downs']
+                        embedFooterComments = res['data']['children'] [randomint]['data']['num_comments']
+                        embed = discord.Embed(title=f"From r/{memesubreddits}", description=F"[{embedTitle}](https://reddit.com{embedLink})", color=random.randint(0, 0xffffff))
+                        embed.set_image(url=res['data']['children'] [randomint]['data']['url'])
+                        embed.set_footer(text=F"👍{embedFooterUp}  👎{embedFooterDown}  💬{embedFooterComments}")
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction("👍")
+                        await message.add_reaction("👎")
 
 
 
@@ -366,7 +376,19 @@ async def rubbish(ctx):
 @client.command()
 async def echo(ctx,*,arg):
     await ctx.channel.purge(limit=1)
-    await ctx.send(f"{arg}")
+    if(arg != "@everyone"):
+        if (arg != "@here"):
+            await ctx.send(f"{arg}")
+        else: 
+            await ctx.send("You are not permitted to ping @ here. Continuing will result in a punishement.")
+    else:
+        await ctx.send("You are not permitted to ping @ everyone. Continuing will result in a punishement.")
+
+@client.command()
+async def google(ctx,*,arg):
+    Urlified = arg.replace(" ", "%20")
+    embed = discord.Embed(title=f"Search Results", description=F"[{arg}](https://google.com/search?q={Urlified})", color=random.randint(0, 0xffffff))
+    await ctx.send(embed=embed)
 
 @client.command()
 async def reddit(ctx,arg):
@@ -375,22 +397,25 @@ async def reddit(ctx,arg):
         async with cs.get(F'https://www.reddit.com/r/{arg}/new.json?sort={sortedmode}') as r:
             res = await r.json()
             randomint = random.randint(0, 25)
-            embedLink = res['data']['children'] [randomint]['data']['permalink']
-            embedTitle = res['data']['children'] [randomint]['data']['title']
-            embedFooterUp = res['data']['children'] [randomint]['data']['ups']
-            embedFooterDown = res['data']['children'] [randomint]['data']['downs']
-            embedFooterComments = res['data']['children'] [randomint]['data']['num_comments']
-            embed = discord.Embed(title=f"From r/{arg}", description=F"[{embedTitle}](https://reddit.com{embedLink})")
-            embed.set_image(url=res['data']['children'] [randomint]['data']['url'])
-            embed.set_footer(text=F"👍{embedFooterUp}  👎{embedFooterDown}  💬{embedFooterComments}")
-            message = await ctx.send(embed=embed)
-            await message.add_reaction("👍")
-            await message.add_reaction("👎")
+            if not (res['data']['children'][randomint]['data']['over_18']):
+                if not (res['data']['children'][randomint]['data']['is_video']):
+                    embedLink = res['data']['children'] [randomint]['data']['permalink']
+                    embedTitle = res['data']['children'] [randomint]['data']['title']
+                    embedFooterUp = res['data']['children'] [randomint]['data']['ups']
+                    embedFooterDown = res['data']['children'] [randomint]['data']['downs']
+                    embedFooterComments = res['data']['children'] [randomint]['data']['num_comments']
+                    embed = discord.Embed(title=f"From r/{arg}", description=F"[{embedTitle}](https://reddit.com{embedLink})")
+                    embed.set_image(url=res['data']['children'] [randomint]['data']['url'])
+                    embed.set_footer(text=F"👍{embedFooterUp}  👎{embedFooterDown}  💬{embedFooterComments}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction("👍")
+                    await message.add_reaction("👎")
 
-@reddit.error
-async def reddit_error(error,ctx):
-    if isinstance(error, commands.CommandInvokeError):
-        await ctx.send(F"Oops! An error occured while fetching a post")
+                else:
+                   await reddit(ctx,arg) 
+            else:
+                await reddit(ctx,arg)
+                print("Blocked NSFW")
 
 
 @client.command()
@@ -411,8 +436,6 @@ async def help(ctx,arg):
         embedVar.add_field(name="`Randnum`", value="Sends a random number between 0 and 10000. \nUsage: ./randnum\n \u200B", inline=True)
         embedVar.add_field(name="`Respond`", value="Sends a random response, similar to \"8ball\". \nUsage: ./respond\n \u200B", inline=True)
         embedVar.add_field(name="`Die`", value="Sends a random death scenario. \nUsage: ./die\n \u200B", inline=True)
-        embedVar.add_field(name="`Boo`", value="Sends a random Haloween emoji. \nUsage: ./boo\n \u200B", inline=True)
-        embedVar.add_field(name="`Pogchamp`", value="Sends the \"Pogchamp\" face in ASCII. \nUsage: ./pogchamp\n \u200B", inline=True)
         embedVar.add_field(name="`Meme`", value="Sends a random meme from popular subreddits. \nUsage: ./meme\n \u200B", inline=True)
         embedVar.add_field(name="`Ubuntu`", value="Sends a random Ubuntu version. \nUsage: ./ubuntu\n \u200B", inline=True)
         embedVar.add_field(name="`Rubbish`", value="Generates random pronounciable nonsense. \nUsage: ./rubbish\n \u200B", inline=True)
