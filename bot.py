@@ -152,19 +152,19 @@ async def ping(ctx):
 
 @client.command()
 async def about(ctx):
-    await ctx.send(f'Gardenbot is a Discord by me is me forked from PurpleBot (<https://github.com/PurpleSci/PurpleBot>).')
+    await ctx.send('Gardenbot is a Discord by me is me forked from PurpleBot (<https://github.com/PurpleSci/PurpleBot>).')
 
 @client.command()
 async def license(ctx):
-    await ctx.send(f'Gardenbot is licensed under MIT. That means it\'s open-source and you are free to redistribute your own modifications of the bot. This is not the full license, it is just summarized. Please read the full license here: https://raw.githubusercontent.com/meisme-dev/Gardenbot/master/LICENSE')
+    await ctx.send('Gardenbot is licensed under MIT. That means it\'s open-source and you are free to redistribute your own modifications of the bot. This is not the full license, it is just summarized. Please read the full license here: https://raw.githubusercontent.com/meisme-dev/Gardenbot/master/LICENSE')
 
 @client.command()
 async def github(ctx):
-    await ctx.send(f'Gardenbot\'s source code is avalaible on GitHub: <https://github.com/meisme-dev/Gardenbot>')
+    await ctx.send('Gardenbot\'s source code is avalaible on GitHub: <https://github.com/meisme-dev/Gardenbot>')
 
 @client.command()
 async def invite(ctx):
-    await ctx.send(f'If you want to add Gardeonbot to your server, use this link: <https://discord.com/api/oauth2/authorize?client_id=769606923091181569&permissions=8&scope=bot>')
+    await ctx.send('If you want to add Gardeonbot to your server, use this link: <https://discord.com/api/oauth2/authorize?client_id=769606923091181569&permissions=8&scope=bot>')
 
 @client.command()
 async def distro(ctx):
@@ -229,11 +229,11 @@ async def groovy(ctx):
 
 @client.command()
 async def pi(ctx):
-    await ctx.send(f'Here is π calculated to the first 1000000 digits: http://newton.ex.ac.uk/research/qsystems/collabs/pi/pi6.txt')
+    await ctx.send('Here is π calculated to the first 1000000 digits: http://newton.ex.ac.uk/research/qsystems/collabs/pi/pi6.txt')
 
 @client.command()
 async def ptable(ctx):
-    await ctx.send(f'Ptable is an interactive online version of the Periodic Table of Elements: https://ptable.com/')
+    await ctx.send('Ptable is an interactive online version of the Periodic Table of Elements: https://ptable.com/')
 
 @client.command()
 async def bsd(ctx):
@@ -324,9 +324,9 @@ async def uinfo(ctx,member: discord.Member):
     embed.add_field(name="Joined server at", value=f'{joined.strftime("%Y-%m-%d")}', inline=True)
     embed.add_field(name="Admin",value=f'{admin}', inline=True)
     embed.add_field(name="Bot",value=f'{bot}', inline=True)
-    embed.add_field(name=f'Roles', value=f'{len(roles)}', inline=True)
-    embed.add_field(name=f'Top role', value=f'{top_role.mention}', inline=True)
-    embed.add_field(name=f'Status', value=status, inline=True)
+    embed.add_field(name='Roles', value=f'{len(roles)}', inline=True)
+    embed.add_field(name='Top role', value=f'{top_role.mention}', inline=True)
+    embed.add_field(name='Status', value=status, inline=True)
     await ctx.send(embed=embed)
 
 @uinfo.error

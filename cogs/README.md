@@ -1,1 +1,1 @@
-## Here you will find additional bot commands and more.
+## Here you will find additional bot commands and more

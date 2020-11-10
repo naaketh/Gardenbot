@@ -1,10 +1,7 @@
 import discord
-import os
-import random
 from discord.ext import commands
 from discord.ext.commands import has_permissions
 from time import sleep
-from datetime import datetime
 
 class Moderation(commands.Cog):
 
