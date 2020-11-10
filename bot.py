@@ -5,8 +5,6 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import aiohttp
 import asyncio
-import time
-
 
 intents = discord.Intents.default()
 intents.members = True  
@@ -25,19 +23,6 @@ predictions = [
     "Yeah, sure.", "What about no?", "Yes, totally.", "Are you kidding me? Of course, no!", "Of course!",
     "I guess, no.", "Probably yes." , "Nah. Not at all.", "Obviously, yes!"
 ]
-
-death_scenarios = [
-    "A snake bit you.", "You met a vampire and he sucked all your blood.", \
-    "You drank a glass of juice, but there was poison inside.", \
-    "You were thrown out into space by a giant gorilla.", "You ate too many mushrooms.", \
-    "A heavy hammer fell onto your head.", "A zombie strangled you to death.", \
-    "A maniac cut your throat while you were sleeping.", "You became too old.", \
-    "You decided that you had to eat 20 bags of chips.", \
-    "You wanted to take a vacation in Chernobyl.", \
-    "Voldemort came to you and said \'Avada Kedavra!\'", \
-    "You were trying to install Arch Linux, but failed."
-]
-
 
 subreddits = [
     "linuxmemes", \
@@ -358,9 +343,9 @@ async def userinfo_error(ctx,error):
     embed.add_field(name="Joined server at", value=f'{joined.strftime("%Y-%m-%d")}', inline=True)
     embed.add_field(name="Admin",value=f'{admin}', inline=True)
     embed.add_field(name="Bot",value=f'{bot}', inline=True)
-    embed.add_field(name=f'Roles', value=f'{len(roles)}', inline=True)
-    embed.add_field(name=f'Top role', value=f'{top_role.mention}', inline=True)
-    embed.add_field(name=f'Status', value=f'{status}', inline=True)
+    embed.add_field(name='Roles', value=f'{len(roles)}', inline=True)
+    embed.add_field(name='Top role', value=f'{top_role.mention}', inline=True)
+    embed.add_field(name='Status', value=f'{status}', inline=True)
     await ctx.send(embed=embed)
 
 @client.command()
@@ -379,7 +364,7 @@ async def echo(ctx,*,arg):
     if(arg != "@everyone"):
         if (arg != "@here"):
             await ctx.send(f"{arg}")
-        else: 
+        else:
             await ctx.send("You are not permitted to ping @ here. Continuing will result in a punishement.")
     else:
         await ctx.send("You are not permitted to ping @ everyone. Continuing will result in a punishement.")
