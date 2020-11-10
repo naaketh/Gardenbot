@@ -180,10 +180,6 @@ async def respond(ctx):
     await ctx.send(random.choice(predictions))
 
 @client.command()
-async def die(ctx):
-    await ctx.send(random.choice(death_scenarios))
-
-@client.command()
 async def pogchamp(ctx):
     await ctx.send('''
 ░░░░░▒░░▄██▄░▒░░░░░░
@@ -420,7 +416,6 @@ async def help(ctx,arg):
         embedVar.add_field(name="`Echo`", value="Repeats the specified message. \nUsage: ./echo message\n \u200B", inline=True)
         embedVar.add_field(name="`Randnum`", value="Sends a random number between 0 and 10000. \nUsage: ./randnum\n \u200B", inline=True)
         embedVar.add_field(name="`Respond`", value="Sends a random response, similar to \"8ball\". \nUsage: ./respond\n \u200B", inline=True)
-        embedVar.add_field(name="`Die`", value="Sends a random death scenario. \nUsage: ./die\n \u200B", inline=True)
         embedVar.add_field(name="`Meme`", value="Sends a random meme from popular subreddits. \nUsage: ./meme\n \u200B", inline=True)
         embedVar.add_field(name="`Ubuntu`", value="Sends a random Ubuntu version. \nUsage: ./ubuntu\n \u200B", inline=True)
         embedVar.add_field(name="`Rubbish`", value="Generates random pronounciable nonsense. \nUsage: ./rubbish\n \u200B", inline=True)
