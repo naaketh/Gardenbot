@@ -1,5 +1,5 @@
 # Garden-Bot
-A bot I originally made for my discord server "The Linux Garden", forked from https://github.com/PurpleSci/PurpleBot. The bot is no ready for use in other servers as well!
+A bot I originally made for my discord server "The Linux Garden", forked from https://github.com/PurpleSci/PurpleBot. The bot is now ready for use in other servers as well!
 
 # Join my discord!
 https://discord.gg/TFg9GTc
