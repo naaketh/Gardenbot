@@ -21,7 +21,7 @@ greetings = [
 
 predictions = [
     "Yeah, sure.", "What about no?", "Yes, totally.", "Are you kidding me? Of course, no!", "Of course!",
-    "I guess, no.", "Probably yes." , "Nah. Not at all.", "Obviously, yes!"
+    "I guess, no.", "Probably yes." , "Nah. Not at all.", "Obviously, yes!", "Ha! yeah... no.", "Maybe..."
 ]
 
 subreddits = [
@@ -30,7 +30,8 @@ subreddits = [
     "memes", \
     "cleanmemes", \
     "wholesomememes", \
-    "progammerhumor" \
+    "progammerhumor", \
+    "linuxmasterrace" \
 ]
 
 
@@ -60,6 +61,7 @@ distro_list = [
     "gNewSense", \
     "MX Linux", \
     "Parrot", \
+    "Bodhi Linux" \
 ]
 bsd_distros = [
     "FreeBSD", \
@@ -80,38 +82,38 @@ sort_mode = [
 ubuntu_versions = [
     "Ubuntu 4.10 (Warty Warthog)", \
     "Ubuntu 5.04 (Hoary Hedgehog)", \
-	"Ubuntu 5.10 (Breezy Badger)", \
+    "Ubuntu 5.10 (Breezy Badger)", \
     "Ubuntu 6.06 LTS (Dapper Drake)", \
-	"Ubuntu 6.10 (Edgy Eft)", \
-	"Ubuntu 7.04 (Feisty Fawn)", \
-	"Ubuntu 7.10 (Gutsy Gibbon)", \
-	"Ubuntu 8.04 LTS (Hardy Heron)", \
-	"Ubuntu 8.10 (Intrepid Ibex)", \
-	"Ubuntu 9.04 (Jaunty Jackalope)", \
-	"Ubuntu 9.10 (Karmic Koala)",  \
-	"Ubuntu 10.04 LTS (Lucid Lynx)",  \
-	"Ubuntu 10.10 (Maverick Meerkat)",  \
-	"Ubuntu 11.04 (Natty Narwhal)",  \
-	"Ubuntu 11.10 (Oneiric Ocelot)",  \
-	"Ubuntu 12.04 LTS (Precise Pangolin)",  \
-	"Ubuntu 12.10 (Quantal Quetzal)",  \
-	"Ubuntu 13.04 (Raring Ringtail)",  \
-	"Ubuntu 13.10 (Saucy Salamander)",  \
-	"Ubuntu 14.04 LTS (Trusty Tahr)",  \
-	"Ubuntu 14.10 (Utopic Unicorn)",  \
-	"Ubuntu 15.04 (Vivid Vervet)",  \
-	"Ubuntu 15.10 (Wily Werewolf)",  \
-	"Ubuntu 16.04 LTS (Xenial Xerus)",  \
-	"Ubuntu 16.10 (Yakkety Yak)",  \
-	"Ubuntu 17.04 (Zesty Zapus)",  \
-	"Ubuntu 17.10 (Artful Aardvark)",  \
-	"Ubuntu 18.04 LTS (Bionic Beaver)",  \
-	"Ubuntu 18.10 (Cosmic Cuttlefish)",  \
-	"Ubuntu 19.04 (Disco Dingo)",  \
-	"Ubuntu 19.10 (Eoan Ermine)",  \
-	"Ubuntu 20.04 LTS (Focal Fossa)",  \
-	"Ubuntu 20.10 (Groovy Gorilla)",  \
-    "Ubuntu 21.04 (Hirsute H...)"
+    "Ubuntu 6.10 (Edgy Eft)", \
+    "Ubuntu 7.04 (Feisty Fawn)", \
+    "Ubuntu 7.10 (Gutsy Gibbon)", \
+    "Ubuntu 8.04 LTS (Hardy Heron)", \
+    "Ubuntu 8.10 (Intrepid Ibex)", \
+    "Ubuntu 9.04 (Jaunty Jackalope)", \
+    "Ubuntu 9.10 (Karmic Koala)",  \
+    "Ubuntu 10.04 LTS (Lucid Lynx)",  \
+    "Ubuntu 10.10 (Maverick Meerkat)",  \
+    "Ubuntu 11.04 (Natty Narwhal)",  \
+    "Ubuntu 11.10 (Oneiric Ocelot)",  \
+    "Ubuntu 12.04 LTS (Precise Pangolin)",  \
+    "Ubuntu 12.10 (Quantal Quetzal)",  \
+    "Ubuntu 13.04 (Raring Ringtail)",  \
+    "Ubuntu 13.10 (Saucy Salamander)",  \
+    "Ubuntu 14.04 LTS (Trusty Tahr)",  \
+    "Ubuntu 14.10 (Utopic Unicorn)",  \
+    "Ubuntu 15.04 (Vivid Vervet)",  \
+    "Ubuntu 15.10 (Wily Werewolf)",  \
+    "Ubuntu 16.04 LTS (Xenial Xerus)",  \
+    "Ubuntu 16.10 (Yakkety Yak)",  \
+    "Ubuntu 17.04 (Zesty Zapus)",  \
+    "Ubuntu 17.10 (Artful Aardvark)",  \
+    "Ubuntu 18.04 LTS (Bionic Beaver)",  \
+    "Ubuntu 18.10 (Cosmic Cuttlefish)",  \
+    "Ubuntu 19.04 (Disco Dingo)",  \
+    "Ubuntu 19.10 (Eoan Ermine)",  \
+    "Ubuntu 20.04 LTS (Focal Fossa)",  \
+    "Ubuntu 20.10 (Groovy Gorilla)",  \
+    "Ubuntu 21.04 (Hirsute H...)" \
 ]
 
 vowels = ["a","e","i","o","u","y"]
@@ -199,6 +201,10 @@ async def pogchamp(ctx):
 ░░░░░▓▓▒▒░▒░░▓▓░░░░░
 ░░░░░░░▒▒▒▒▒▒▒░░░░░░
 ''')
+
+@client.command()
+async def stallman(ctx):
+    await ctx.send('I\'d just like to interject for a moment. What you’re referring to as Linux, is in fact, GNU/Linux, or as I’ve recently taken to calling it, GNU plus Linux. Linux is not an operating system unto itself, but rather another free component of a fully functioning GNU system made useful by the GNU corelibs, shell utilities and vital system components comprising a full OS as defined by POSIX. Many computer users run a modified version of the GNU system every day, without realizing it. Through a peculiar turn of events, the version of GNU which is widely used today is often called “Linux”, and many of its users are not aware that it is basically the GNU system, developed by the GNU Project. There really is a Linux, and these people are using it, but it is just a part of the system they use. Linux is the kernel: the program in the system that allocates the machine’s resources to the other programs that you run. The kernel is an essential part of an operating system, but useless by itself; it can only function in the context of a complete operating system. Linux is normally used in combination with the GNU operating system: the whole system is basically GNU with Linux added, or GNU/Linux. All the so-called “Linux” distributions are really distributions of GNU/Linux.')
 
 @client.command()
 async def ubuntu(ctx):
@@ -347,12 +353,12 @@ async def userinfo_error(ctx,error):
 @client.command()
 async def rubbish(ctx):
     sentence = ""
-    for i in range(random.randrange(3,7)):
+    for i in range(random.randrange(2,9)):
         word = str()
         for j in range(random.randrange(1,5)):
             word = word + random.choice(consonants) + random.choice(vowels)
         sentence = sentence + word + " "
-    await ctx.send(sentence.capitalize().rstrip() + random.choice(["!","?","."]))
+    await ctx.send(sentence.capitalize().rstrip() + random.choice(["!","?",".","..."]))
 
 @client.command()
 async def echo(ctx,*,arg):
@@ -361,9 +367,9 @@ async def echo(ctx,*,arg):
         if (arg != "@here"):
             await ctx.send(f"{arg}")
         else:
-            await ctx.send("You are not permitted to ping @ here. Continuing will result in a punishement.")
+            await ctx.send("You are not permitted to ping `@here`. Continuing will result in a punishement.")
     else:
-        await ctx.send("You are not permitted to ping @ everyone. Continuing will result in a punishement.")
+        await ctx.send("You are not permitted to ping `@everyone`. Continuing will result in a punishement.")
 
 @client.command()
 async def google(ctx,*,arg):
