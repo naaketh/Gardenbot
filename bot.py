@@ -2,7 +2,7 @@ import discord
 import os
 import random
 from discord.ext import commands
-from dotenv import load_dotenv
+
 import aiohttp
 import asyncio
 
@@ -10,8 +10,7 @@ intents = discord.Intents.default()
 intents.members = True  
 intents.presences = True
 
-client = commands.Bot(command_prefix=("./"), help_command=None, intents=intents)
-load_dotenv()
+client = commands.Bot(command_prefix=("&"), help_command=None, intents=intents)
 
 greetings = [
     "Hello!", "Hallo!", "Bonjour!", "Ciao!", "¡Hola!",
@@ -350,15 +349,6 @@ async def userinfo_error(ctx,error):
     embed.add_field(name='Status', value=f'{status}', inline=True)
     await ctx.send(embed=embed)
 
-@client.command()
-async def rubbish(ctx):
-    sentence = ""
-    for i in range(random.randrange(2,9)):
-        word = str()
-        for j in range(random.randrange(1,5)):
-            word = word + random.choice(consonants) + random.choice(vowels)
-        sentence = sentence + word + " "
-    await ctx.send(sentence.capitalize().rstrip() + random.choice(["!","?",".","..."]))
 
 @client.command()
 async def echo(ctx,*,arg):
@@ -468,4 +458,4 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
-client.run(os.getenv('DISCORD_TOKEN'))
+client.run('NzUzNDczNDQyNTIyNzI2NTAw.X1ms0w.yGwVY2Bw6zjm8rFTAJO2dnXTvEk')
