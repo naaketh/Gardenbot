@@ -1,6 +1,7 @@
 from discord.ext import commands
 from discord.ext.commands import has_permissions
 from time import sleep
+import discord
 
 class Moderation(commands.Cog):
 
@@ -11,7 +12,8 @@ class Moderation(commands.Cog):
     @has_permissions(manage_messages=True)
     async def purge(self,ctx, amount : int):
         await ctx.channel.purge(limit=amount+1)
-        sent = await ctx.send(F"Deleted `{amount}` messages")
+        embedVar = discord.Embed(title=f"Warned", description=f"Deleted `{amount}` messages`", color=0x35a64f)
+        sent = await ctx.send(embed=embedVar)
         sleep(1)
         await sent.delete()
 

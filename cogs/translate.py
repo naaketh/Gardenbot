@@ -1,4 +1,4 @@
-from googletrans import Translator
+from translate import Translator
 from discord.ext import commands
 
 class Utility(commands.Cog):
@@ -8,12 +8,8 @@ class Utility(commands.Cog):
 
     @commands.command()
     async def trans(self,ctx,arg,lang):
-        translator = Translator()
-        translated = translator.translate(f'{arg}', dest=f"{lang}")
-        await ctx.send(f'{translated.text}')
-        translated = None
-        lang = None
-        arg = None
+        translator = Translator(to_lang=f"{lang}")
+        await ctx.send(f"{translator.translate(arg)}")
 
 def setup(client):
     client.add_cog(Utility(client))

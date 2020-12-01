@@ -10,14 +10,17 @@ class Moderation(commands.Cog):
     @commands.command()
     @has_permissions(administrator=True)
     async def warn(self,ctx,member : discord.Member, *, reason = None):
-        await ctx.channel.purge(limit=1)
-        await ctx.send(F"{member.mention} has been warned for {reason}")
+        await ctx.message.delete()
+        embedVar = discord.Embed(title=f"Warned", description=f"{member.mention} was warned for {reason}.", color=0x35a64f)
+        await ctx.send(embed=embedVar)
         await member.send(F"You have been warned for {reason}")
         
     @commands.command()
     @has_permissions(administrator=True)
     async def pardon(self,ctx,member : discord.Member):
-        await ctx.channel.purge(limit=1)
+        await ctx.message.delete()
+        embedVar = discord.Embed(title=f"Pardoned", description=f"{member.mention} was pardoned.", color=0x35a64f)
+        await ctx.send(embed=embedVar)
         await member.send("You have been pardoned")
 
 def setup(client):

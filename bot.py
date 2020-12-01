@@ -79,43 +79,6 @@ sort_mode = [
     "new" \
 ]
 
-ubuntu_versions = [
-    "Ubuntu 4.10 (Warty Warthog)", \
-    "Ubuntu 5.04 (Hoary Hedgehog)", \
-    "Ubuntu 5.10 (Breezy Badger)", \
-    "Ubuntu 6.06 LTS (Dapper Drake)", \
-    "Ubuntu 6.10 (Edgy Eft)", \
-    "Ubuntu 7.04 (Feisty Fawn)", \
-    "Ubuntu 7.10 (Gutsy Gibbon)", \
-    "Ubuntu 8.04 LTS (Hardy Heron)", \
-    "Ubuntu 8.10 (Intrepid Ibex)", \
-    "Ubuntu 9.04 (Jaunty Jackalope)", \
-    "Ubuntu 9.10 (Karmic Koala)",  \
-    "Ubuntu 10.04 LTS (Lucid Lynx)",  \
-    "Ubuntu 10.10 (Maverick Meerkat)",  \
-    "Ubuntu 11.04 (Natty Narwhal)",  \
-    "Ubuntu 11.10 (Oneiric Ocelot)",  \
-    "Ubuntu 12.04 LTS (Precise Pangolin)",  \
-    "Ubuntu 12.10 (Quantal Quetzal)",  \
-    "Ubuntu 13.04 (Raring Ringtail)",  \
-    "Ubuntu 13.10 (Saucy Salamander)",  \
-    "Ubuntu 14.04 LTS (Trusty Tahr)",  \
-    "Ubuntu 14.10 (Utopic Unicorn)",  \
-    "Ubuntu 15.04 (Vivid Vervet)",  \
-    "Ubuntu 15.10 (Wily Werewolf)",  \
-    "Ubuntu 16.04 LTS (Xenial Xerus)",  \
-    "Ubuntu 16.10 (Yakkety Yak)",  \
-    "Ubuntu 17.04 (Zesty Zapus)",  \
-    "Ubuntu 17.10 (Artful Aardvark)",  \
-    "Ubuntu 18.04 LTS (Bionic Beaver)",  \
-    "Ubuntu 18.10 (Cosmic Cuttlefish)",  \
-    "Ubuntu 19.04 (Disco Dingo)",  \
-    "Ubuntu 19.10 (Eoan Ermine)",  \
-    "Ubuntu 20.04 LTS (Focal Fossa)",  \
-    "Ubuntu 20.10 (Groovy Gorilla)",  \
-    "Ubuntu 21.04 (Hirsute H...)" \
-]
-
 vowels = ["a","e","i","o","u","y"]
 
 consonants = [
@@ -135,23 +98,29 @@ async def on_ready():
 
 @client.command()
 async def ping(ctx):
+    embedVar = discord.Embed(title=f"Ping", description=f"Pong! Client-side ping took {round(client.latency * 1000)}ms.", color=0x35a64f)
+    await ctx.send(embed=embedVar)
     await ctx.send(f'Pong! Client-side ping took {round(client.latency * 1000)}ms')
 
 @client.command()
 async def about(ctx):
-    await ctx.send('Gardenbot is a Discord by me is me forked from PurpleBot (<https://github.com/PurpleSci/PurpleBot>).')
+    embedVar = discord.Embed(title=f"About", description=f"Gardenbot is a Discord bot by <@536303380088356904>. It was started as a bot for their Linux community, which you can find [here](https://discord.gg/TFg9GTc)!", color=0x35a64f)
+    await ctx.send(embed=embedVar)
 
 @client.command()
 async def license(ctx):
-    await ctx.send('Gardenbot is licensed under MIT. That means it\'s open-source and you are free to redistribute your own modifications of the bot. This is not the full license, it is just summarized. Please read the full license here: https://raw.githubusercontent.com/meisme-dev/Gardenbot/master/LICENSE')
+    embedVar = discord.Embed(title=f"Source code", description=f"Gardenbot is licensed under MIT. That means it\'s open-source and you are free to redistribute your own modifications of the bot. DISCLAIMER: this is not the full license, it is just summarized. Please read the full license [here](https://raw.githubusercontent.com/meisme-dev/Gardenbot/master/LICENSE).", color=0x35a64f)
+    await ctx.send(embed=embedVar)
 
 @client.command()
 async def github(ctx):
-    await ctx.send('Gardenbot\'s source code is avalaible on GitHub: <https://github.com/meisme-dev/Gardenbot>')
+    embedVar = discord.Embed(title=f"Source code", description=f"Gardenbot\'s source code is avalaible [here](https://github.com/meisme-dev/Gardenbot).", color=0x35a64f)
+    await ctx.send(embed=embedVar)
 
 @client.command()
 async def invite(ctx):
-    await ctx.send('If you want to add Gardeonbot to your server, use this link: <https://discord.com/api/oauth2/authorize?client_id=769606923091181569&permissions=8&scope=bot>')
+    embedVar = discord.Embed(title=f"Invite", description="If you want to add Gardenbot to your server, click [here](https://discord.com/api/oauth2/authorize?client_id=769606923091181569&permissions=8&scope=bot).", color=0x35a64f)
+    await ctx.send(embed=embedVar)
 
 @client.command()
 async def distro(ctx):
@@ -175,52 +144,18 @@ async def hello(ctx):
 
 @client.command()
 async def randnum(ctx):
-    await ctx.send(random.randint(0, 10000))
+    embedVar = discord.Embed(title=f"Random number", description=f"{random.randint(0, 10000)}", color=0x35a64f)
+    await ctx.send(embed=embedVar)
 
 @client.command()
 async def respond(ctx):
-    await ctx.send(random.choice(predictions))
-
-@client.command()
-async def pogchamp(ctx):
-    await ctx.send('''
-░░░░░▒░░▄██▄░▒░░░░░░
-░░░▄██████████▄▒▒░░░
-░▒▄████████████▓▓▒░░
-▓███▓▓█████▀▀████▒░░
-▄███████▀▀▒░░░░▀█▒░░
-████████▄░░░░░░░▀▄░░
-▀██████▀░░▄▀▀▄░░▄█▒░
-░█████▀░░░░▄▄░░▒▄▀░░
-░█▒▒██░░░░▀▄█░░▒▄█░░
-░█░▓▒█▄░░░░░░░░░▒▓░░
-░▀▄░░▀▀░▒░░░░░▄▄░▒░░
-░░█▒▒▒▒▒▒▒▒▒░░░░▒░░░
-░░░▓▒▒▒▒▒░▒▒▄██▀░░░░
-░░░░▓▒▒▒░▒▒░▓▀▀▒░░░░
-░░░░░▓▓▒▒░▒░░▓▓░░░░░
-░░░░░░░▒▒▒▒▒▒▒░░░░░░
-''')
+    embedVar = discord.Embed(title=f"Prediction", description=f"{random.choice(predictions)}", color=0x35a64f)
+    await ctx.send(embed=embedVar)
 
 @client.command()
 async def interject(ctx):
     await ctx.send('I\'d just like to interject for a moment. What you’re referring to as Linux, is in fact, GNU/Linux, or as I’ve recently taken to calling it, GNU plus Linux. Linux is not an operating system unto itself, but rather another free component of a fully functioning GNU system made useful by the GNU corelibs, shell utilities and vital system components comprising a full OS as defined by POSIX. Many computer users run a modified version of the GNU system every day, without realizing it. Through a peculiar turn of events, the version of GNU which is widely used today is often called “Linux”, and many of its users are not aware that it is basically the GNU system, developed by the GNU Project. There really is a Linux, and these people are using it, but it is just a part of the system they use. Linux is the kernel: the program in the system that allocates the machine’s resources to the other programs that you run. The kernel is an essential part of an operating system, but useless by itself; it can only function in the context of a complete operating system. Linux is normally used in combination with the GNU operating system: the whole system is basically GNU with Linux added, or GNU/Linux. All the so-called “Linux” distributions are really distributions of GNU/Linux.')
 
-@client.command()
-async def ubuntu(ctx):
-    await ctx.send(random.choice(ubuntu_versions))
-
-@client.command()
-async def groovy(ctx):
-    await ctx.send('https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_500,h_776/https://assets.ubuntu.com/v1/fe951eda-20.10_Groovy+Gorilla_RPi_Sketch.svg')
-
-@client.command()
-async def pi(ctx):
-    await ctx.send('Here is π calculated to the first 1000000 digits: http://newton.ex.ac.uk/research/qsystems/collabs/pi/pi6.txt')
-
-@client.command()
-async def ptable(ctx):
-    await ctx.send('Ptable is an interactive online version of the Periodic Table of Elements: https://ptable.com/')
 
 @client.command()
 async def bsd(ctx):
@@ -358,18 +293,22 @@ async def rubbish(ctx):
         for j in range(random.randrange(1,5)):
             word = word + random.choice(consonants) + random.choice(vowels)
         sentence = sentence + word + " "
-    await ctx.send(sentence.capitalize().rstrip() + random.choice(["!","?",".","..."]))
+    numgen = sentence.capitalize().rstrip() + random.choice(["!","?",".","..."])
+    embedVar = discord.Embed(title="Rubbish", description=f"{numgen}", color=0x35a64f)
+    await ctx.send(embed=embedVar)
 
 @client.command()
 async def echo(ctx,*,arg):
-    await ctx.channel.purge(limit=1)
-    if(arg != "@everyone"):
-        if (arg != "@here"):
+    await ctx.message.delete()
+    if not("@here" in arg):
+        if not("@everyone" in arg):
             await ctx.send(f"{arg}")
         else:
-            await ctx.send("You are not permitted to ping `@here`. Continuing will result in a punishement.")
+            embedVar = discord.Embed(title=f"Error!", description="You are not permitted to ping `@here` using the echo command.", color=0xFF0000)
+            await ctx.send(embed=embedVar)
     else:
-        await ctx.send("You are not permitted to ping `@everyone`. Continuing will result in a punishement.")
+        embedVar = discord.Embed(title=f"Error!", description="You are not permitted to ping `@everyone` using the echo command.", color=0xFF0000)
+        await ctx.send(embed=embedVar)
 
 @client.command()
 async def google(ctx,*,arg):
@@ -405,17 +344,26 @@ async def reddit(ctx,arg):
                 print("Blocked NSFW")
 
 
+
+
+@client.command()
+async def embed(ctx,*,arg):
+     embedVar = discord.Embed(title=f"{arg}", description="", color=0x107026)
+     await ctx.message.delete()
+     await ctx.send(embed=embedVar)
+
+
 @client.command()
 async def help(ctx,arg):
     author = ctx.message.author
     await author.create_dm()
     if arg == "moderation":
-        embedVar = discord.Embed(title="Moderation Commands", description="Shows a list of commands for moderators \n \u200B", color=0x3388FF)
+        embedVar = discord.Embed(title="Moderation Commands", description="Shows a list of commands for moderators \n \u200B", color=0x35a64f)
         embedVar.add_field(name="`Kick`", value="Kicks a member. \nUsage: ./kick <@member> \n \u200B", inline=True)
         embedVar.add_field(name="`Mute`", value="Mutes a member. \nUsage: ./mute <@member> \n \u200B", inline=True)
         embedVar.add_field(name="`Ban`", value="Bans a member. \nUsage: ./ban <@member>\n \u200B", inline=True)
     if arg == "fun":
-        embedVar = discord.Embed(title="Fun Commands", description="Shows a list of commands for fun stuff \n \u200B", color=0x3388FF)
+        embedVar = discord.Embed(title="Fun Commands", description="Shows a list of commands for fun stuff \n \u200B", color=0x35a64f)
         embedVar.add_field(name="`Hello`", value="Greets you! \nUsage: ./hello \n \u200B", inline=True)
         embedVar.add_field(name="`Distro`", value="Sends a random distro. \nUsage: ./distro \n \u200B", inline=True)
         embedVar.add_field(name="`BSD`", value="Sends a BSD distro. \nUsage: ./bsd \n \u200B", inline=True)
@@ -423,12 +371,12 @@ async def help(ctx,arg):
         embedVar.add_field(name="`Randnum`", value="Sends a random number between 0 and 10000. \nUsage: ./randnum\n \u200B", inline=True)
         embedVar.add_field(name="`Respond`", value="Sends a random response, similar to \"8ball\". \nUsage: ./respond\n \u200B", inline=True)
         embedVar.add_field(name="`Meme`", value="Sends a random meme from popular subreddits. \nUsage: ./meme\n \u200B", inline=True)
-        embedVar.add_field(name="`Ubuntu`", value="Sends a random Ubuntu version. \nUsage: ./ubuntu\n \u200B", inline=True)
+        embedVar.add_field(name="`Embed`", value="Embeds the specified message. \nUsage: ./embed message\n \u200B", inline=True)
         embedVar.add_field(name="`Rubbish`", value="Generates random pronounciable nonsense. \nUsage: ./rubbish\n \u200B", inline=True)
         embedVar.add_field(name="`DM`", value="DMs you with a message. \nUsage: ./dm <message>\n \u200B", inline=True)
         embedVar.add_field(name="`Reddit`", value="Fetches a post from the specified Subreddit. \nUsage: ./reddit <subreddit>\n \u200B", inline=True)
     if arg == "utility":
-        embedVar = discord.Embed(title="Utility Commands", description="Shows a list of commands for utility \n \u200B", color=0x3388FF)
+        embedVar = discord.Embed(title="Utility Commands", description="Shows a list of commands for utility \n \u200B", color=0x35a64f)
         embedVar.add_field(name="`Help`", value="Displays the help message. \nUsage: ./help [category]\n \u200B", inline=True)
         embedVar.add_field(name="`Ping`", value="Sends the bot latency in ms. \nUsage: ./ping \n \u200B", inline=True)
         embedVar.add_field(name="`About`", value="Displays information about the bot. \nUsage: ./about \n \u200B", inline=True)
@@ -447,10 +395,10 @@ async def help(ctx,arg):
 @help.error
 async def help_error(ctx,error):
     if isinstance(error, commands.MissingRequiredArgument):
-        embedVar = discord.Embed(title="Help", description="Shows a list of commands \n \u200B", color=0x3388FF)
-        embedVar.add_field(name="Utility", value="`Shows a list of utility commands! \nUsage: ./help utility` \n \u200B", inline=False)
-        embedVar.add_field(name="Fun", value="`Shows a list of commands for fun stuff! \nUsage: ./help fun` \n \u200B", inline=False)
-        embedVar.add_field(name="Moderation", value="`Shows a list of commands for moderators! \nUsage: ./help moderation`", inline=False)
+        embedVar = discord.Embed(title="`Help`", description="Shows a list of commands \n \u200B", color=0x35a64f)
+        embedVar.add_field(name="`Utility`", value="Shows a list of utility commands! \nUsage: ./help utility \n \u200B", inline=False)
+        embedVar.add_field(name="`Fun`", value="Shows a list of commands for fun stuff! \nUsage: ./help fun \n \u200B", inline=False)
+        embedVar.add_field(name="`Moderation`", value="Shows a list of commands for moderators! \nUsage: ./help moderation", inline=False)
         await ctx.send(embed=embedVar)
 
 @client.event

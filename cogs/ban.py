@@ -11,7 +11,9 @@ class Moderation(commands.Cog):
     @has_permissions(administrator=True)
     async def ban(self,ctx,member : discord.Member, *, reason = None):
         await member.ban(reason=reason)
-        await ctx.send(f'The user {member.mention} has been banned.')
+        embedVar = discord.Embed(title=f"Ban", description=f"{member.mention} was banned for {reason}.", color=0x35a64f)
+        await ctx.message.delete()
+        await ctx.send(embed=embedVar)
         
     @commands.command()
     @has_permissions(administrator=True)
@@ -20,7 +22,9 @@ class Moderation(commands.Cog):
         for ban_entry in banned_users:
             user = ban_entry.user
             await ctx.guild.unban(user)
-            await ctx.send(f'The user {member} has been unbanned.')
+            embedVar = discord.Embed(title=f"Warned", description=f"{member.mention} was unbanned.", color=0x35a64f)
+            await ctx.message.delete()
+            await ctx.send(embed=embedVar)
 
 def setup(client):
     client.add_cog(Moderation(client))
