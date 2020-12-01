@@ -11,7 +11,7 @@ class Moderation(commands.Cog):
     @has_permissions(administrator=True)
     async def ban(self,ctx,member : discord.Member, *, reason = None):
         await member.ban(reason=reason)
-        embedVar = discord.Embed(title=f"Ban", description=f"{member.mention} was banned for {reason}.", color=0x35a64f)
+        embedVar = discord.Embed(title="Ban", description=f"{member.mention} was banned for {reason}.", color=0x35a64f)
         await ctx.message.delete()
         await ctx.send(embed=embedVar)
         
@@ -22,7 +22,7 @@ class Moderation(commands.Cog):
         for ban_entry in banned_users:
             user = ban_entry.user
             await ctx.guild.unban(user)
-            embedVar = discord.Embed(title=f"Warned", description=f"{member.mention} was unbanned.", color=0x35a64f)
+            embedVar = discord.Embed(title="Warned", description=f"{member.mention} was unbanned.", color=0x35a64f)
             await ctx.message.delete()
             await ctx.send(embed=embedVar)
 

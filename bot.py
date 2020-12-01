@@ -92,34 +92,40 @@ async def on_connect():
 
 @client.event
 async def on_ready():
-    await client.change_presence(status=discord.Status.online,
-    activity=discord.Game(f"Type \'./help\' for the commands. On {len(client.guilds)} servers"))
     print("Gardenbot has connected to Discord")
+    while True:
+            await client.change_presence(status=discord.Status.online, activity=discord.Game(f"./help for more info."))
+            await asyncio.sleep(610)
+            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(client.guilds)} servers."))
+            await asyncio.sleep(10)
+            await client.change_presence(status=discord.Status.online, activity=discord.Game(f"https://discord.gg/TFg9GTc"))
+            await asyncio.sleep(10)
+            
 
 @client.command()
 async def ping(ctx):
-    embedVar = discord.Embed(title=f"Ping", description=f"Pong! Client-side ping took {round(client.latency * 1000)}ms.", color=0x35a64f)
+    embedVar = discord.Embed(title="Ping", description=f"Pong! Client-side ping took {round(client.latency * 1000)}ms.", color=0x35a64f)
     await ctx.send(embed=embedVar)
-    await ctx.send(f'Pong! Client-side ping took {round(client.latency * 1000)}ms')
 
 @client.command()
 async def about(ctx):
-    embedVar = discord.Embed(title=f"About", description=f"Gardenbot is a Discord bot by <@536303380088356904>. It was started as a bot for their Linux community, which you can find [here](https://discord.gg/TFg9GTc)!", color=0x35a64f)
+    embedVar = discord.Embed(title="About", description="Gardenbot is a Discord bot by <@536303380088356904>. It was started as a bot for a Linux community, which you can find [here](https://discord.gg/TFg9GTc)!", color=0x35a64f)
     await ctx.send(embed=embedVar)
 
 @client.command()
 async def license(ctx):
-    embedVar = discord.Embed(title=f"Source code", description=f"Gardenbot is licensed under MIT. That means it\'s open-source and you are free to redistribute your own modifications of the bot. DISCLAIMER: this is not the full license, it is just summarized. Please read the full license [here](https://raw.githubusercontent.com/meisme-dev/Gardenbot/master/LICENSE).", color=0x35a64f)
+    embedVar = discord.Embed(title="License", description="Gardenbot is licensed under MIT. That means it\'s open-source and you are free to redistribute your own modifications of the bot.", color=0x35a64f)
+    embedVar.add_field(name="\u200b", value="**DISCLAIMER**: this is not the full license, and this is not legal advice. Please read the full license [here](https://raw.githubusercontent.com/meisme-dev/Gardenbot/master/LICENSE).")
     await ctx.send(embed=embedVar)
 
 @client.command()
 async def github(ctx):
-    embedVar = discord.Embed(title=f"Source code", description=f"Gardenbot\'s source code is avalaible [here](https://github.com/meisme-dev/Gardenbot).", color=0x35a64f)
+    embedVar = discord.Embed(title="Source code", description="Gardenbot\'s source code is avalaible [here](https://github.com/meisme-dev/Gardenbot).", color=0x35a64f)
     await ctx.send(embed=embedVar)
 
 @client.command()
 async def invite(ctx):
-    embedVar = discord.Embed(title=f"Invite", description="If you want to add Gardenbot to your server, click [here](https://discord.com/api/oauth2/authorize?client_id=769606923091181569&permissions=8&scope=bot).", color=0x35a64f)
+    embedVar = discord.Embed(title="Invite", description="If you want to add Gardenbot to your server, click [here](https://discord.com/api/oauth2/authorize?client_id=769606923091181569&permissions=8&scope=bot).", color=0x35a64f)
     await ctx.send(embed=embedVar)
 
 @client.command()
@@ -133,8 +139,9 @@ async def dm(ctx,*,arg):
 @client.command(pass_context = True)
 async def reminder(ctx,specifiedtime,*,arg):
         specifiedtimeseconds = int(specifiedtime) * 60
-        await ctx.channel.purge(limit=1)
-        await ctx.send(f"Reminder set to {arg}, sending in {int(specifiedtime)} minutes!")
+        await ctx.message.delete()
+        embedVar = discord.Embed(title="Reminder", description=f"Reminder \"{arg}\" will be sending in {specifiedtime} minutes.", color=0x35a64f)
+        await ctx.send(embed=embedVar)
         await asyncio.sleep(specifiedtimeseconds)
         await ctx.message.author.send(arg)
 
@@ -144,18 +151,18 @@ async def hello(ctx):
 
 @client.command()
 async def randnum(ctx):
-    embedVar = discord.Embed(title=f"Random number", description=f"{random.randint(0, 10000)}", color=0x35a64f)
+    embedVar = discord.Embed(title="Random number", description=f"{random.randint(0, 10000)}", color=0x35a64f)
     await ctx.send(embed=embedVar)
 
 @client.command()
 async def respond(ctx):
-    embedVar = discord.Embed(title=f"Prediction", description=f"{random.choice(predictions)}", color=0x35a64f)
+    embedVar = discord.Embed(title="Prediction", description=f"{random.choice(predictions)}", color=0x35a64f)
     await ctx.send(embed=embedVar)
 
 @client.command()
 async def interject(ctx):
-    await ctx.send('I\'d just like to interject for a moment. What you’re referring to as Linux, is in fact, GNU/Linux, or as I’ve recently taken to calling it, GNU plus Linux. Linux is not an operating system unto itself, but rather another free component of a fully functioning GNU system made useful by the GNU corelibs, shell utilities and vital system components comprising a full OS as defined by POSIX. Many computer users run a modified version of the GNU system every day, without realizing it. Through a peculiar turn of events, the version of GNU which is widely used today is often called “Linux”, and many of its users are not aware that it is basically the GNU system, developed by the GNU Project. There really is a Linux, and these people are using it, but it is just a part of the system they use. Linux is the kernel: the program in the system that allocates the machine’s resources to the other programs that you run. The kernel is an essential part of an operating system, but useless by itself; it can only function in the context of a complete operating system. Linux is normally used in combination with the GNU operating system: the whole system is basically GNU with Linux added, or GNU/Linux. All the so-called “Linux” distributions are really distributions of GNU/Linux.')
-
+    embedVar = discord.Embed(title="Interjection", description="I\'d just like to interject for a moment. What you’re referring to as Linux, is in fact, GNU/Linux, or as I’ve recently taken to calling it, GNU plus Linux. Linux is not an operating system unto itself, but rather another free component of a fully functioning GNU system made useful by the GNU corelibs, shell utilities and vital system components comprising a full OS as defined by POSIX. Many computer users run a modified version of the GNU system every day, without realizing it. Through a peculiar turn of events, the version of GNU which is widely used today is often called “Linux”, and many of its users are not aware that it is basically the GNU system, developed by the GNU Project. There really is a Linux, and these people are using it, but it is just a part of the system they use. Linux is the kernel: the program in the system that allocates the machine’s resources to the other programs that you run. The kernel is an essential part of an operating system, but useless by itself; it can only function in the context of a complete operating system. Linux is normally used in combination with the GNU operating system: the whole system is basically GNU with Linux added, or GNU/Linux. All the so-called “Linux” distributions are really distributions of GNU/Linux.", color=0x35a64f)
+    await ctx.send(embed=embedVar)
 
 @client.command()
 async def bsd(ctx):
@@ -313,14 +320,14 @@ async def echo(ctx,*,arg):
 @client.command()
 async def google(ctx,*,arg):
     Urlified = arg.replace(" ", "%20")
-    embed = discord.Embed(title="Search Results", description=F"[{arg}](https://google.com/search?q={Urlified})", color=random.randint(0, 0xffffff))
+    embed = discord.Embed(title="Search Results", description=f"[{arg}](https://google.com/search?q={Urlified})", color=random.randint(0, 0xffffff))
     await ctx.send(embed=embed)
 
 @client.command()
 async def reddit(ctx,arg):
     async with aiohttp.ClientSession() as cs:
         sortedmode = random.choice(sort_mode)
-        async with cs.get(F'https://www.reddit.com/r/{arg}/new.json?sort={sortedmode}') as r:
+        async with cs.get(f'https://www.reddit.com/r/{arg}/new.json?sort={sortedmode}') as r:
             res = await r.json()
             randomint = random.randint(0, 25)
             if not (res['data']['children'][randomint]['data']['over_18']):
@@ -332,7 +339,7 @@ async def reddit(ctx,arg):
                     embedFooterComments = res['data']['children'] [randomint]['data']['num_comments']
                     embed = discord.Embed(title=f"From r/{arg}", description=F"[{embedTitle}](https://reddit.com{embedLink})")
                     embed.set_image(url=res['data']['children'] [randomint]['data']['url'])
-                    embed.set_footer(text=F"👍{embedFooterUp}  👎{embedFooterDown}  💬{embedFooterComments}")
+                    embed.set_footer(text=f"👍{embedFooterUp}  👎{embedFooterDown}  💬{embedFooterComments}")
                     message = await ctx.send(embed=embed)
                     await message.add_reaction("👍")
                     await message.add_reaction("👎")
@@ -348,7 +355,7 @@ async def reddit(ctx,arg):
 
 @client.command()
 async def embed(ctx,*,arg):
-     embedVar = discord.Embed(title=f"{arg}", description="", color=0x107026)
+     embedVar = discord.Embed(title="", description=f"{arg}", color=0x35a64f)
      await ctx.message.delete()
      await ctx.send(embed=embedVar)
 
@@ -383,8 +390,6 @@ async def help(ctx,arg):
         embedVar.add_field(name="`License`", value="Displays the bot license. \nUsage: ./license \n \u200B", inline=True)
         embedVar.add_field(name="`GitHub`", value="Sends the source code link. \nUsage: ./github \n \u200B", inline=True)
         embedVar.add_field(name="`Invite`", value="Sends the bot invite link. \nUsage: ./invite \n \u200B", inline=True)
-        embedVar.add_field(name="`Pi`", value="Displays a link to 1 000 000 digits of pi. \nUsage: ./pi \n \u200B", inline=True)
-        embedVar.add_field(name="`Ptable`", value="Displays a link to an interactive Periodic Table. \nUsage: ./ptable\n \u200B", inline=True)        
         embedVar.add_field(name="`Reminder`", value="Sets a reminder. \nUsage: ./reminder <minutes> <message>\n \u200B", inline=True)
 
 

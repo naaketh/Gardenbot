@@ -21,7 +21,7 @@ class Moderation(commands.Cog):
             for channel in ctx.guild.channels:
                 await channel.set_permissions(role, overwrite=perms)
         await member.add_roles(role)
-        embedVar = discord.Embed(title=f"Muted", description=f"{member.mention} was muted for {reason}.", color=0x35a64f)
+        embedVar = discord.Embed(title="Muted", description=f"{member.mention} was muted for {reason}.", color=0x35a64f)
         await ctx.message.delete()
         await ctx.send(embed=embedVar)
         
@@ -30,7 +30,7 @@ class Moderation(commands.Cog):
     async def unmute(self,ctx,member : discord.Member):
         role = discord.utils.get(ctx.guild.roles, name="Muted")
         await member.remove_roles(role)
-        embedVar = discord.Embed(title=f"Unmuted", description=f"{member.mention} was unmuted.", color=0x35a64f)
+        embedVar = discord.Embed(title="Unmuted", description=f"{member.mention} was unmuted.", color=0x35a64f)
         await ctx.message.delete()
         await ctx.send(embed=embedVar)
 
