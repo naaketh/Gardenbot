@@ -4,7 +4,7 @@ import random
 from discord.ext import commands
 from dotenv import load_dotenv
 import aiohttp
-import asyncio
+import asyncio 
 
 intents = discord.Intents.default()
 intents.members = True  
@@ -93,16 +93,22 @@ async def on_connect():
 @client.event
 async def on_ready():
     print("Gardenbot has connected to Discord")
+    activeServers = client.guilds
+    sum = 0
+    for s in activeServers:
+        sum += len(s.members)
     while True:
             await client.change_presence(status=discord.Status.online, activity=discord.Game(f"/help for more info."))
-            await asyncio.sleep(610)
+            await asyncio.sleep(5)
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(client.guilds)} servers."))
-            await asyncio.sleep(10)
+            await asyncio.sleep(5)
             await client.change_presence(status=discord.Status.online, activity=discord.Game(f"https://discord.gg/TFg9GTc"))
-            await asyncio.sleep(10)
-            await client.change_presence(status=discord.Status.online, activity=discord.Game(f"being a bot"))
-            await asyncio.sleep(10)
-            
+            await asyncio.sleep(5)
+            await client.change_presence(status=discord.Status.online, activity=discord.Game(f"Linux"))
+            await asyncio.sleep(5)
+            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{sum} members."))
+            await asyncio.sleep(5)
+
 
 @client.command()
 async def ping(ctx):
@@ -137,6 +143,16 @@ async def distro(ctx):
 @client.command(pass_context = True)
 async def dm(ctx,*,arg):
     await ctx.message.author.send(arg)
+
+@client.command(aliases=['suggestion','request'])
+async def suggest(ctx,*,arg):
+    embedVar = discord.Embed(title="Suggestion", description=f"{arg}", color=0x35a64f)
+    embedVar.set_footer(text=f"Requested by {ctx.message.author}.")
+    channel = client.get_channel(783385724158083102)
+    msg = await channel.send(embed=embedVar)
+    await msg.add_reaction("✔️")
+    await msg.add_reaction("❌")
+    await ctx.message.add_reaction("✅")
 
 @client.command(pass_context = True)
 async def reminder(ctx,specifiedtime,*,arg):
@@ -411,12 +427,12 @@ async def help(ctx,arg):
     author = ctx.message.author
     await author.create_dm()
     if arg == "moderation":
-        embedVar = discord.Embed(title="Moderation Commands", description="Shows a list of commands for moderators \n \u200B", color=0x35a64f)
+        embedVar = discord.Embed(title="Moderation Commands", description="A list of commands for moderators. No memes in #general >:C \n \u200B", color=0x35a64f)
         embedVar.add_field(name="`Kick`", value="Kicks a member. \nUsage: ./kick <@member> \n \u200B", inline=True)
         embedVar.add_field(name="`Mute`", value="Mutes a member. \nUsage: ./mute <@member> \n \u200B", inline=True)
         embedVar.add_field(name="`Ban`", value="Bans a member. \nUsage: ./ban <@member>\n \u200B", inline=True)
     if arg == "fun":
-        embedVar = discord.Embed(title="Fun Commands", description="Shows a list of commands for fun stuff \n \u200B", color=0x35a64f)
+        embedVar = discord.Embed(title="Fun Commands", description="A list of commands for fun stuff to do while you are bored \n \u200B", color=0x35a64f)
         embedVar.add_field(name="`Hello`", value="Greets you! \nUsage: ./hello \n \u200B", inline=True)
         embedVar.add_field(name="`Distro`", value="Sends a random distro. \nUsage: ./distro \n \u200B", inline=True)
         embedVar.add_field(name="`BSD`", value="Sends a BSD distro. \nUsage: ./bsd \n \u200B", inline=True)
@@ -429,7 +445,7 @@ async def help(ctx,arg):
         embedVar.add_field(name="`DM`", value="DMs you with a message. \nUsage: ./dm <message>\n \u200B", inline=True)
         embedVar.add_field(name="`Reddit`", value="Fetches a post from the specified Subreddit. \nUsage: ./reddit <subreddit>\n \u200B", inline=True)
     if arg == "utility":
-        embedVar = discord.Embed(title="Utility Commands", description="Shows a list of commands for utility \n \u200B", color=0x35a64f)
+        embedVar = discord.Embed(title="Utility Commands", description="A list of utility commands to fit any needs \n \u200B", color=0x35a64f)
         embedVar.add_field(name="`Help`", value="Displays the help message. \nUsage: ./help [category]\n \u200B", inline=True)
         embedVar.add_field(name="`Ping`", value="Sends the bot latency in ms. \nUsage: ./ping \n \u200B", inline=True)
         embedVar.add_field(name="`About`", value="Displays information about the bot. \nUsage: ./about \n \u200B", inline=True)
@@ -446,7 +462,7 @@ async def help(ctx,arg):
 @help.error
 async def help_error(ctx,error):
     if isinstance(error, commands.MissingRequiredArgument):
-        embedVar = discord.Embed(title="`Help`", description="Shows a list of commands \n \u200B", color=0x35a64f)
+        embedVar = discord.Embed(title="Help", description="Shows a list of commands \n \u200B", color=0x35a64f)
         embedVar.add_field(name="`Utility`", value="Shows a list of utility commands! \nUsage: ./help utility \n \u200B", inline=False)
         embedVar.add_field(name="`Fun`", value="Shows a list of commands for fun stuff! \nUsage: ./help fun \n \u200B", inline=False)
         embedVar.add_field(name="`Moderation`", value="Shows a list of commands for moderators! \nUsage: ./help moderation", inline=False)
