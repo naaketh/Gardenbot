@@ -2,3 +2,4 @@
 *.pyc
 cogs/__pycache__/mute.cpython-38.pyc
 cogs/__pycache__/ban.cpython-38.pyc
+cogs/__pycache__/purge.cpython-38.pyc

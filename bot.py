@@ -10,7 +10,7 @@ intents = discord.Intents.default()
 intents.members = True  
 intents.presences = True
 
-client = commands.Bot(command_prefix=("./"), help_command=None, intents=intents)
+client = commands.Bot(command_prefix=("/"), help_command=None, intents=intents)
 load_dotenv()
 
 greetings = [
@@ -94,11 +94,13 @@ async def on_connect():
 async def on_ready():
     print("Gardenbot has connected to Discord")
     while True:
-            await client.change_presence(status=discord.Status.online, activity=discord.Game(f"./help for more info."))
+            await client.change_presence(status=discord.Status.online, activity=discord.Game(f"/help for more info."))
             await asyncio.sleep(610)
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(client.guilds)} servers."))
             await asyncio.sleep(10)
             await client.change_presence(status=discord.Status.online, activity=discord.Game(f"https://discord.gg/TFg9GTc"))
+            await asyncio.sleep(10)
+            await client.change_presence(status=discord.Status.online, activity=discord.Game(f"being a bot"))
             await asyncio.sleep(10)
             
 
@@ -131,19 +133,63 @@ async def invite(ctx):
 @client.command()
 async def distro(ctx):
     await ctx.send(random.choice(distro_list))
-    
+
 @client.command(pass_context = True)
 async def dm(ctx,*,arg):
     await ctx.message.author.send(arg)
 
 @client.command(pass_context = True)
 async def reminder(ctx,specifiedtime,*,arg):
-        specifiedtimeseconds = int(specifiedtime) * 60
-        await ctx.message.delete()
-        embedVar = discord.Embed(title="Reminder", description=f"Reminder \"{arg}\" will be sending in {specifiedtime} minutes.", color=0x35a64f)
-        await ctx.send(embed=embedVar)
-        await asyncio.sleep(specifiedtimeseconds)
-        await ctx.message.author.send(arg)
+    if specifiedtime.endswith("s"):
+        multiplier = 1
+        specifiedtime = specifiedtime[:-1]
+        specifiedtime = int(specifiedtime)
+        if specifiedtime > 1:
+            timedisplay = "seconds"
+        else:
+            timedisplay = "second"
+    elif specifiedtime.endswith("m"):
+        multiplier = 60
+        specifiedtime = specifiedtime[:-1]
+        specifiedtime = int(specifiedtime)
+        if specifiedtime != 1:
+            timedisplay = "minutes"
+        else:
+            timedisplay = "minutes"
+    elif specifiedtime.endswith("h"):
+        multiplier = 3600
+        specifiedtime = specifiedtime[:-1]
+        specifiedtime = int(specifiedtime)
+        if specifiedtime != 1:
+            timedisplay = "hours"
+        else:
+            timedisplay = "hour"
+    elif specifiedtime.endswith("d"):
+        multiplier = 86400
+        specifiedtime = specifiedtime[:-1]
+        specifiedtime = int(specifiedtime)
+        if specifiedtime != 1:
+            timedisplay = "days"
+        else:
+            timedisplay = "day"
+    elif specifiedtime.isnumeric():
+        specifiedtime = int(specifiedtime)
+        multiplier = 60
+        if specifiedtime != 1:
+            timedisplay = "minutes"
+        else:
+            timedisplay = "minute"
+    else:
+       embedVar = discord.Embed(title="Error", description=f"Please enter a valid ending. Example: 1s, 1m, 1h, 1d, or 1.", color=0xff0000)
+       await ctx.send(embed=embedVar) 
+       await ctx.message.delete()
+
+    specifiedtimeseconds = int(specifiedtime) * int(multiplier)
+    await ctx.message.delete()
+    embedVar = discord.Embed(title="Reminder", description=f"Reminder \"{arg}\" will be sending in {specifiedtime} {timedisplay}.", color=0x35a64f)
+    await ctx.send(embed=embedVar)
+    await asyncio.sleep(specifiedtimeseconds)
+    await ctx.message.author.send(arg)
 
 @client.command()
 async def hello(ctx):
