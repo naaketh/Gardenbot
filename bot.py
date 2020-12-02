@@ -91,14 +91,14 @@ async def on_ready():
 
     #Start a while loop to change the bot status every five seconds.
     while True:
-            await client.change_presence(status=discord.Status.online, activity=discord.Game(f"/help for more info."))
+            await client.change_presence(status=discord.Status.online, activity=discord.Game("/help for more info."))
             await asyncio.sleep(5)
             #"len(client.guilds)" gets the number of servers the bot is in.
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(client.guilds)} servers."))
             await asyncio.sleep(5)
-            await client.change_presence(status=discord.Status.online, activity=discord.Game(f"https://discord.gg/TFg9GTc"))
+            await client.change_presence(status=discord.Status.online, activity=discord.Game("https://discord.gg/TFg9GTc"))
             await asyncio.sleep(5)
-            await client.change_presence(status=discord.Status.online, activity=discord.Game(f"Linux"))
+            await client.change_presence(status=discord.Status.online, activity=discord.Game("Linux"))
             await asyncio.sleep(5)
             #Display the sum of members in every server the bot is in, which we defined earlier.
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{sum} members."))
@@ -195,7 +195,7 @@ async def reminder(ctx,specifiedtime,*,arg):
         else:
             timedisplay = "minute"
     else:
-       ReminderEmbed = discord.Embed(title="Error", description=f"Please enter a valid ending. Example: 1s, 1m, 1h, 1d, or 1.", color=0xff0000)
+       ReminderEmbed = discord.Embed(title="Error!", description="Please enter a valid ending. Example: 1s, 1m, 1h, 1d, or 1.", color=0xff0000)
        await ctx.send(embed=ReminderEmbed) 
        await ctx.message.delete()
 
@@ -386,10 +386,10 @@ async def echo(ctx,*,arg):
         if not("@everyone" in arg):
             await ctx.send(f"{arg}")
         else:
-            embedVar = discord.Embed(title=f"Error!", description="You are not permitted to ping `@here` using the echo command.", color=0xFF0000)
+            embedVar = discord.Embed(title="Error!", description="You are not permitted to ping `@here` using the echo command.", color=0xFF0000)
             await ctx.send(embed=embedVar)
     else:
-        embedVar = discord.Embed(title=f"Error!", description="You are not permitted to ping `@everyone` using the echo command.", color=0xFF0000)
+        embedVar = discord.Embed(title="Error!", description="You are not permitted to ping `@everyone` using the echo command.", color=0xFF0000)
         await ctx.send(embed=embedVar)
 
 @client.command()
