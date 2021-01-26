@@ -36,7 +36,7 @@ class Moderation(commands.Cog):
 
 #Define the commands
     @commands.command()
-    @has_permissions(administrator=True)
+    @has_permissions(manage_roles=True)
     async def mute(self,ctx,member : discord.Member, *, reason = None):
         role = discord.utils.get(ctx.guild.roles, name="Muted")
         perms = discord.PermissionOverwrite()

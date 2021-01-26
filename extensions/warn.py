@@ -36,7 +36,7 @@ class Moderation(commands.Cog):
 
 #Define the commands
     @commands.command()
-    @has_permissions(administrator=True)
+    @has_permissions(manage_messages=True)
     async def warn(self,ctx,member : discord.Member, *, reason = None):
         await ctx.message.delete()
         embedVar = discord.Embed(title="Warned", description=f"{member.mention} was warned for {reason}.", color=0x35a64f)

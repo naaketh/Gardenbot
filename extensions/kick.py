@@ -36,7 +36,7 @@ class Moderation(commands.Cog):
 
 #Define the commands
     @commands.command()
-    @has_permissions(administrator=True)
+    @has_permissions(kick_members=True)
     async def kick(self,ctx,member : discord.Member, *, reason = None):
         await member.kick(reason=reason)
         embedVar = discord.Embed(title="Kicked", description=f"{member.mention} has been kicked for {reason}", color=0x35a64f)
