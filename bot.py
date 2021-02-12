@@ -427,15 +427,10 @@ async def rubbish(ctx):
 @client.command()
 async def echo(ctx,*,arg):
     await ctx.message.delete()
-    if not("@here" in arg):
-        if not("@everyone" in arg):
-            await ctx.send(f"{arg}")
-        else:
-            embedVar = discord.Embed(title="Error!", description="You are not permitted to ping `@everyone` using the echo command.", color=0xFF0000)
-            embedVar.set_footer(text=f"Requested by {ctx.message.author } ●  At {ctx.message.created_at.strftime('%Y/%m/%d - %I:%M %p GMT')}")
-            await ctx.send(embed=embedVar)
+    if not("@" in arg):
+        await ctx.send(f"{arg}")
     else:
-        embedVar = discord.Embed(title="Error!", description="You are not permitted to ping `@here` using the echo command.", color=0xFF0000)
+        embedVar = discord.Embed(title="Error!", description="You are not permitted to ping using the echo command.", color=0xFF0000)
         embedVar.set_footer(text=f"Requested by {ctx.message.author } ●  At {ctx.message.created_at.strftime('%Y/%m/%d - %I:%M %p GMT')}")
         await ctx.send(embed=embedVar)
 
