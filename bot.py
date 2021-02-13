@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+#!C:\Users\omare\AppData\Local\Programs\Python\Python39\python.exe
+# -*- coding: utf-8 -*- 
 # MIT License
 
 # Copyright (c) 2020 me is me
@@ -21,6 +24,7 @@
 # SOFTWARE.
 
 #Define dependencies of the bot and import them
+
 import discord
 import os
 import random
@@ -32,9 +36,10 @@ import mysql.connector
 import requests
 from discord.ext.commands import has_permissions
 from discord_slash import SlashCommand
-from discord_slash.model import SlashContext
+from discord_slash import SlashContext
+from datetime import datetime
 
-
+now = datetime.utcnow()
 #Set the intents for the uinfo command
 intents = discord.Intents.all()
 intents.members = True  
@@ -85,9 +90,6 @@ consonants = [
 @client.event
 async def on_connect():
     print("Connecting to Discord.....")
-
-
-
 
 @client.event
 async def on_ready():
@@ -615,6 +617,46 @@ async def help_error(ctx,error):
         HelpEmbed.add_field(name="`Moderation`", value="Shows a list of commands for moderators! \nUsage: /help moderation", inline=False)
         HelpEmbed.set_footer(text=f"At {ctx.message.created_at.strftime('%Y/%m/%d - %I:%M %p GMT')}")
         await ctx.send(embed=HelpEmbed)
+
+@slash.slash(name="help")
+async def test(ctx, *arg):
+    print(arg)
+    if arg == "Fun commands!":
+        HelpEmbed = discord.Embed(itle="Fun Commands", description="A list of commands for fun stuff to do while you are bored \n \u200B", color=0x35a64f)
+        HelpEmbed.add_field(name="Hello", value="Greets you! \nUsage: `/hello` \n \u200B", inline=True)
+        HelpEmbed.add_field(name="Distro", value="Sends a random distro. \nUsage: `/distro` \n \u200B", inline=True)
+        HelpEmbed.add_field(name="BSD", value="Sends a BSD distro. \nUsage: `/bsd` \n \u200B", inline=True)
+        HelpEmbed.add_field(name="Echo", value="Repeats the specified message. \nUsage: `/echo <message>`\n \u200B", inline=True)
+        HelpEmbed.add_field(name="Randnum", value="Sends a random number between 0 and 10000. \nUsage: `/randnum`\n \u200B", inline=True)
+        HelpEmbed.add_field(name="Respond", value="Sends a random response, similar to \"8ball\". \nUsage: `/respond`\n \u200B", inline=True)
+        HelpEmbed.add_field(name="Meme", value="Sends a random meme from popular subreddits. \nUsage: `/meme`\n \u200B", inline=True)
+        HelpEmbed.add_field(name="Embed", value="Embeds the specified message. \nUsage: `/embed <message>` \n \u200B", inline=True)
+        HelpEmbed.add_field(name="Rubbish", value="Generates random pronounciable nonsense. \nUsage: `/rubbish`\n \u200B", inline=True)
+        HelpEmbed.add_field(name="DM", value="DMs you with a message. \nUsage: `/dm <message>`\n \u200B", inline=True)
+        HelpEmbed.add_field(name="Reddit", value="Fetches a post from the specified Subreddit. \nUsage: `/reddit <subreddit>`\n \u200B", inline=True)
+    
+    if arg == "Utility commands!":
+        HelpEmbed = discord.Embed(itle="Utility Commands", description="A list of utility commands to fit any needs \n \u200B", color=0x35a64f)
+        HelpEmbed.add_field(name="Help", value="Displays the help message. \nUsage: `/help [category]`\n \u200B", inline=True)
+        HelpEmbed.add_field(name="Ping", value="Sends the bot latency in ms. \nUsage: `/ping` \n \u200B", inline=True)
+        HelpEmbed.add_field(name="About", value="Displays information about the bot. \nUsage: `/about` \n \u200B", inline=True)
+        HelpEmbed.add_field(name="License", value="Displays the bot license. \nUsage: `/license` \n \u200B", inline=True)
+        HelpEmbed.add_field(name="GitHub", value="Sends the source code link. \nUsage: `/github` \n \u200B", inline=True)
+        HelpEmbed.add_field(name="Invite", value="Sends the bot invite link. \nUsage: `/invite` \n \u200B", inline=True)
+        HelpEmbed.add_field(name="Reminder", value="Sets a reminder. \nUsage: `/reminder <minutes> <message>`\n \u200B", inline=True)
+
+    if arg == "Moderation commands!":
+        HelpEmbed = discord.Embed(title="Moderation Commands", description="A list of commands for moderators. No memes in #general >:C \n \u200B", color=0x35a64f)
+        HelpEmbed.add_field(name="Kick", value="Kicks a member. \nUsage: `/kick <@member>` \n \u200B", inline=True)
+        HelpEmbed.add_field(name="Mute", value="Mutes a member. \nUsage: `/mute <@member>` \n \u200B", inline=True)
+        HelpEmbed.add_field(name="Ban", value="Bans a member. \nUsage: `/ban <@member>`\n \u200B", inline=True)
+    else:
+        HelpEmbed = discord.Embed(title="Help", description="Shows a list of commands \n \u200B", color=0x35a64f)
+        HelpEmbed.add_field(name="`Utility`", value="Shows a list of utility commands! \nUsage: /help utility \n \u200B", inline=False)
+        HelpEmbed.add_field(name="`Fun`", value="Shows a list of commands for fun stuff! \nUsage: /help fun \n \u200B", inline=False)
+        HelpEmbed.add_field(name="`Moderation`", value="Shows a list of commands for moderators! \nUsage: /help moderation", inline=False)
+    HelpEmbed.set_footer(text=f"At {now.strftime('%Y/%m/%d - %I:%M %p GMT')}")
+    await ctx.send(embeds=[HelpEmbed])
 
 @client.event
 async def on_disconnect():
